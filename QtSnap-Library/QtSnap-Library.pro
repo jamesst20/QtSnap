@@ -14,10 +14,14 @@ CONFIG += staticlib
 CONFIG += c++14
 
 SOURCES += Snapchat.cpp \
-    NetworkRequestMaker.cpp
+    NetworkRequestMaker.cpp \
+    TokenLib.cpp \
+    Utils.cpp
 
 HEADERS += Snapchat.h \
-    NetworkRequestMaker.h
+    NetworkRequestMaker.h \
+    TokenLib.h \
+    Utils.h
 unix {
     target.path = /usr/lib
     INSTALLS += target
