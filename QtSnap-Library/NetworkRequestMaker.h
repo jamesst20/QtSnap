@@ -59,6 +59,8 @@ private:
     QNetworkRequest request;
     QByteArray parametersByteArray;
     QUrlQuery parameters;
+
+    static const QString BASE_URL;
 };
 
 #endif // NETWORKREQUESTMAKER_H

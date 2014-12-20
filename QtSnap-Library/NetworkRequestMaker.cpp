@@ -1,9 +1,11 @@
 #include "NetworkRequestMaker.h"
 
+const QString NetworkRequestMaker::BASE_URL = "https://feelinsonice-hrd.appspot.com/";
+
 NetworkRequestMaker::NetworkRequestMaker(QString url, QUrlQuery params){
     //Initialize variables
     this->manager = new QNetworkAccessManager(this);
-    this->request = QNetworkRequest(QUrl(url));
+    this->request = QNetworkRequest(QUrl(BASE_URL + url));
 
     //Add parameters to a byte array
     this->parametersByteArray.append(params.toString());
@@ -16,7 +18,7 @@ NetworkRequestMaker::NetworkRequestMaker(QString url, QList<QHttpPart> params){
     //Initialize variables
     this->manager = new QNetworkAccessManager();
     this->httpMultiPart = new QHttpMultiPart();
-    this->request = QNetworkRequest(QUrl(url));
+    this->request = QNetworkRequest(QUrl(BASE_URL + url));
 
     //Add parameters to QHttpMultiPart
     for(int i = 0; i < params.size(); i++){
@@ -29,11 +31,7 @@ NetworkRequestMaker::NetworkRequestMaker(QString url, QList<QHttpPart> params){
 
 NetworkRequestMaker::~NetworkRequestMaker()
 {
-    delete manager;
 
-    if(httpMultiPart){
-        delete httpMultiPart;
-    }
 }
 
 void NetworkRequestMaker::executeRequest(){
