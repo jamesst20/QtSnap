@@ -11,10 +11,13 @@ QT       -= gui
 TARGET = QtSnap-Library
 TEMPLATE = lib
 CONFIG += staticlib
+CONFIG += c++14
 
-SOURCES += Snapchat.cpp
+SOURCES += Snapchat.cpp \
+    NetworkRequestMaker.cpp
 
-HEADERS += Snapchat.h
+HEADERS += Snapchat.h \
+    NetworkRequestMaker.h
 unix {
     target.path = /usr/lib
     INSTALLS += target
