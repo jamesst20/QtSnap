@@ -16,3 +16,6 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp
+
+INCLUDEPATH += $$PWD/../QtSnap-Library
+DEPENDPATH += $$PWD/../QtSnap-Library
