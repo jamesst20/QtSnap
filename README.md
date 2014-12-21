@@ -1,4 +1,4 @@
 QtSnap
 ======
 
-Snapchat library build with Qt
+Snapchat library built with Qt
