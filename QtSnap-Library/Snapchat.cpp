@@ -54,7 +54,7 @@ void Snapchat::onLoginCompleted(int httpCode, QByteArray data){
         if(this->fullSnapchatObj.contains(UPDATES_RESPONSE_KEY)){
             emit loginCompleted(true, "");
         }else{
-            emit loginCompleted(false, fullSnapchatObj.contains(MESSAGE_KEY) ? fullSnapchatObj["message"].toString() : "Unknown error");
+            emit loginCompleted(false, fullSnapchatObj.contains(MESSAGE_KEY) ? fullSnapchatObj[MESSAGE_KEY].toString() : "Unknown error");
         }
     }else{
         emit loginCompleted(false, "Json Parser error : " + jsonError.errorString());
