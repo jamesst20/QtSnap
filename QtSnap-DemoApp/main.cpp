@@ -2,8 +2,17 @@
 
 #include "Snapchat.h"
 
+static Snapchat snapchat;
+
 void onLoginCompletted(bool success, QString reason){
-    qDebug() << "Success : " << success << " Reason : " << reason;
+    qDebug() << "Login status : " << success << " Reason : " << reason;
+    if(success){
+        snapchat.refresh();
+    }
+}
+
+void onRefreshCompletted(bool success, QString reason){
+    qDebug() << "Refresh status : " << success << " Reason : " << reason;
 }
 
 int main(int argc, char *argv[])
@@ -12,7 +21,6 @@ int main(int argc, char *argv[])
 
     QTextStream in(stdin);
     QTextStream out(stdout);
-
     out << "Snapchat username : ";
     out.flush();
     QString username = in.readLine();
@@ -21,13 +29,14 @@ int main(int argc, char *argv[])
     out.flush();
     QString password = in.readLine();
 
-    Snapchat snapchat;
     QObject::connect(&snapchat, &Snapchat::loginCompleted, &onLoginCompletted);
+    QObject::connect(&snapchat, &Snapchat::refreshCompleted, &onRefreshCompletted);
 
     out << "Logging in...\n";
     out.flush();
 
     snapchat.login(username, password);
+
 
     return a.exec();
 }
