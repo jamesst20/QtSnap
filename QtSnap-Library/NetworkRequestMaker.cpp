@@ -63,5 +63,8 @@ void NetworkRequestMaker::executeRequest(){
 }
 
 void NetworkRequestMaker::finished(QNetworkReply *reply){
-    emit onRequestDone(QVariant(reply->attribute(QNetworkRequest::HttpStatusCodeAttribute)).toInt(), reply->readAll());
+    QByteArray dataRead = reply->readAll();
+    emit onRequestDone(QVariant(reply->attribute(QNetworkRequest::HttpStatusCodeAttribute)).toInt(), dataRead);
+    //Log request history
+    Utils::log("Request to " + this->request.url().toString() + " Result : " + dataRead);
 }

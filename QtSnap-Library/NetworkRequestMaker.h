@@ -17,6 +17,7 @@
 #include <QHttpMultiPart>
 #include <QHttpPart>
 
+#include "Utils.h"
 
 
 class NetworkRequestMaker : public QObject

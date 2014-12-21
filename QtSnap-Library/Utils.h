@@ -9,6 +9,7 @@ class Utils
 {
 public:
     static void log(QByteArray bytes);
+    static void log(QString bytes);
 
 private:
     static QFile *file_log;

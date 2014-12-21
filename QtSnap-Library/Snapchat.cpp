@@ -42,9 +42,6 @@ void Snapchat::onLoginCompleted(int httpCode, QByteArray data){
     //Delete it, free memory
     nrm->deleteLater();
 
-    //Log data received
-    Utils::log(data);
-
     QJsonParseError jsonError;
     QJsonDocument fullSnapchatDoc = QJsonDocument::fromJson(data, &jsonError);
 
