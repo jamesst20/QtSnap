@@ -40,7 +40,9 @@ private:
     static const QString PASSWORD_KEY;
     static const QString TIMESTAMP_KEY;
     static const QString REQ_TOKEN_KEY;
+    static const QString FEATURES_MAP_KEY;
     static const QString MESSAGE_KEY;
+
 };
 
 #endif // SNAPCHAT_H

@@ -11,6 +11,7 @@ const QString Snapchat::USERNAME_KEY = "username";
 const QString Snapchat::PASSWORD_KEY = "password";
 const QString Snapchat::TIMESTAMP_KEY = "timestamp";
 const QString Snapchat::REQ_TOKEN_KEY = "req_token";
+const QString Snapchat::FEATURES_MAP_KEY = "features_map";
 const QString Snapchat::MESSAGE_KEY = "message";
 
 
@@ -26,9 +27,11 @@ void Snapchat::login(QString username, QString password){
 
     long timestamp = QDateTime::currentMSecsSinceEpoch();
     params.addQueryItem(USERNAME_KEY, username);
-    params.addQueryItem(PASSWORD_KEY, password);
-    params.addQueryItem(REQ_TOKEN_KEY, TokenLib::getStaticRequestToken(timestamp));
     params.addQueryItem(TIMESTAMP_KEY, QString::number(timestamp));
+    params.addQueryItem(REQ_TOKEN_KEY, TokenLib::getStaticRequestToken(timestamp));
+    params.addQueryItem(PASSWORD_KEY, password);
+    params.addQueryItem(FEATURES_MAP_KEY, "{\"all_updates_friends_response\":true}");
+
 
     NetworkRequestMaker *nrm = new NetworkRequestMaker(LOGIN_PATH, params);
     connect(nrm, SIGNAL(onRequestDone(int,QByteArray)), this, SLOT(onLoginCompleted(int,QByteArray)));
@@ -51,7 +54,7 @@ void Snapchat::onLoginCompleted(int httpCode, QByteArray data){
         if(this->fullSnapchatObj.contains(UPDATES_RESPONSE_KEY)){
             emit loginCompleted(true, "");
         }else{
-            emit loginCompleted(false, fullSnapchatObj.contains(MESSAGE_KEY) ? fullSnapchatObj[MESSAGE_KEY].toString() : "Unknown error");
+            emit loginCompleted(false, fullSnapchatObj.contains(MESSAGE_KEY) ? fullSnapchatObj[MESSAGE_KEY].toString() : "Unknown error. Http Code : " + httpCode);
         }
     }else{
         emit loginCompleted(false, "Json Parser error : " + jsonError.errorString());
