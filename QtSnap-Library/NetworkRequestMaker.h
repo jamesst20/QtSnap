@@ -37,7 +37,6 @@ public:
     /// \param params Parameters of the request. This can include files.
     ///
     NetworkRequestMaker(QString url, QList<QHttpPart> params);
-    ~NetworkRequestMaker();
 
     ///
     /// \brief executeRequest Execute the request

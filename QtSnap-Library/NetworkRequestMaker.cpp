@@ -16,7 +16,7 @@ NetworkRequestMaker::NetworkRequestMaker(QString url, QUrlQuery params){
 
 NetworkRequestMaker::NetworkRequestMaker(QString url, QList<QHttpPart> params){
     //Initialize variables
-    this->manager = new QNetworkAccessManager();
+    this->manager = new QNetworkAccessManager(this);
     this->httpMultiPart = new QHttpMultiPart();
     this->request = QNetworkRequest(QUrl(BASE_URL + url));
 
@@ -27,11 +27,6 @@ NetworkRequestMaker::NetworkRequestMaker(QString url, QList<QHttpPart> params){
 
     //Connect signals
     connect(this->manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(finished(QNetworkReply*)));
-}
-
-NetworkRequestMaker::~NetworkRequestMaker()
-{
-
 }
 
 void NetworkRequestMaker::executeRequest(){
