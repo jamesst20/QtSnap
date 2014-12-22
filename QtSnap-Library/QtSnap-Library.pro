@@ -16,12 +16,16 @@ CONFIG += c++14
 SOURCES += Snapchat.cpp \
     NetworkRequestMaker.cpp \
     TokenLib.cpp \
-    Utils.cpp
+    Utils.cpp \
+    Friend.cpp \
+    FriendController.cpp
 
 HEADERS += Snapchat.h \
     NetworkRequestMaker.h \
     TokenLib.h \
-    Utils.h
+    Utils.h \
+    Friend.h \
+    FriendController.h
 unix {
     target.path = /usr/lib
     INSTALLS += target
