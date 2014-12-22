@@ -3,6 +3,7 @@
 
 #include "Friend.h"
 
+#include <QObject>
 #include <QList>
 
 #include <QJsonDocument>
@@ -10,15 +11,21 @@
 #include <QJsonArray>
 
 
-class FriendController
+class FriendController : public QObject
 {
+    Q_OBJECT
 
 public:
-    FriendController(QJsonObject friendsObj);
+    FriendController();
+
+    void parseJsonObject(QJsonObject friendsObj);
 
     QList<Friend> getFriends();
     QList<Friend> getFriendRequests();
     QList<QString> getBestFriends();
+
+signals:
+    void onFriendsRefreshed();
 
 private:
     QList<Friend> friends;

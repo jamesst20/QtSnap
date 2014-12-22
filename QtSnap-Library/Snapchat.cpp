@@ -87,10 +87,17 @@ void Snapchat::onRefreshCompleted(int httpCode, QByteArray data){
 }
 
 void Snapchat::parseSnapchatObjs(){
+    //Store Snapchat Objs
     this->updatesSnapchatObj = fullSnapchatObj[UPDATES_RESPONSE_KEY].toObject();
     this->friendsSnapchatObj = fullSnapchatObj[FRIENDS_RESPONSE_KEY].toObject();
     this->storiesSnapchatObj = fullSnapchatObj[STORIES_RESPONSE_KEY].toObject();
     this->conversationsSnapchatObj = fullSnapchatObj[CONVERSATIONS_REPONSE_KEY].toArray();
+    //Initialize Controllers
+    this->friendController.parseJsonObject(this->friendsSnapchatObj);
     //Save authToken used for all requests.
     this->authToken = this->updatesSnapchatObj[AUTH_TOKEN_KEY].toString();
+}
+
+FriendController* Snapchat::getFriendController(){
+    return &this->friendController;
 }

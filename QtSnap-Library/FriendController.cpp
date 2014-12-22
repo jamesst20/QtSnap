@@ -1,11 +1,15 @@
 #include "FriendController.h"
 
-const QString FRIENDS_KEY = "friends";
-const QString ADDED_FRIENDS_KEY = "added_friends";
-const QString BESTS_KEY = "bests";
+const QString FriendController::FRIENDS_KEY = "friends";
+const QString FriendController::ADDED_FRIENDS_KEY = "added_friends";
+const QString FriendController::BESTS_KEY = "bests";
 
-FriendController::FriendController(QJsonObject friendsObj)
+FriendController::FriendController()
 {
+
+}
+
+void FriendController::parseJsonObject(QJsonObject friendsObj){
     QJsonArray friendsJson = friendsObj[FRIENDS_KEY].toArray();
     QJsonArray friendRequestsJson = friendsObj[ADDED_FRIENDS_KEY].toArray();
     QJsonArray bestFriendsJson = friendsObj[BESTS_KEY].toArray();
@@ -22,6 +26,9 @@ FriendController::FriendController(QJsonObject friendsObj)
     for(int i = 0; i < bestFriendsJson.size(); i++){
         bestFriends.append(bestFriendsJson.at(i).toString());
     }
+
+    //Tell listeners
+    emit onFriendsRefreshed();
 }
 
 QList<Friend> FriendController::getFriends(){

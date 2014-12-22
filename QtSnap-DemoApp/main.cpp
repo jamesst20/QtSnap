@@ -3,24 +3,29 @@
 #include "Snapchat.h"
 
 static Snapchat snapchat;
+static QTextStream in(stdin);
+static QTextStream out(stdout);
 
 void onLoginCompletted(bool success, QString reason){
-    qDebug() << "Login status : " << success << " Reason : " << reason;
     if(success){
-        snapchat.refresh();
+        qDebug() << "Login successful.\n";
+    }else{
+        qDebug() << "Failed to login : " << reason << "\n";
+        qDebug() << "Press return key to exit.";
+        //Wait for enter key.
+        in.readLine();
+        //Exit
+        exit(0);
     }
-}
-
-void onRefreshCompletted(bool success, QString reason){
-    qDebug() << "Refresh status : " << success << " Reason : " << reason;
 }
 
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
 
-    QTextStream in(stdin);
-    QTextStream out(stdout);
+    //Event loop used to force waiting for a signal
+    QEventLoop loop;
+
     out << "Snapchat username : ";
     out.flush();
     QString username = in.readLine();
@@ -30,13 +35,17 @@ int main(int argc, char *argv[])
     QString password = in.readLine();
 
     QObject::connect(&snapchat, &Snapchat::loginCompleted, &onLoginCompletted);
-    QObject::connect(&snapchat, &Snapchat::refreshCompleted, &onRefreshCompletted);
+    QObject::connect(&snapchat, SIGNAL(loginCompleted(bool,QString)), &loop, SLOT(quit()));
 
     out << "Logging in...\n";
     out.flush();
 
     snapchat.login(username, password);
 
+    //Wait for login finished
+    loop.exec();
+
+    //TODO Menu
 
     return a.exec();
 }

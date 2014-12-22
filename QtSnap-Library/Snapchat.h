@@ -1,14 +1,20 @@
 #ifndef SNAPCHAT_H
 #define SNAPCHAT_H
 
+#include <iostream>
+#include <memory>
+
 #include <QString>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
 
+#include "FriendController.h"
 #include "TokenLib.h"
 #include "Utils.h"
 #include "NetworkRequestMaker.h"
+
+#include "FriendController.h"
 
 
 class Snapchat : public QObject
@@ -18,6 +24,7 @@ public:
     Snapchat();
     void login(QString username, QString password);
     void refresh();
+    FriendController *getFriendController();
 
 private slots:
     void onLoginCompleted(int httpCode, QByteArray data);
@@ -28,16 +35,18 @@ signals:
     void refreshCompleted(bool success, QString reason);
 
 private:
+    void parseSnapchatObjs();
+
     QString username;
     QString authToken;
+
+    FriendController friendController;
 
     QJsonObject fullSnapchatObj;
     QJsonObject updatesSnapchatObj;
     QJsonObject friendsSnapchatObj;
     QJsonObject storiesSnapchatObj;
     QJsonArray conversationsSnapchatObj;
-
-    void parseSnapchatObjs();
 
     static const QString LOGIN_PATH;
     static const QString ALL_UPDATES_PATH;
