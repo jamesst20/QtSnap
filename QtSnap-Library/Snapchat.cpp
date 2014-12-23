@@ -87,10 +87,15 @@ void Snapchat::parseSnapchatObjs(){
     this->conversationsSnapchatObj = fullSnapchatObj[CONVERSATIONS_REPONSE_KEY].toArray();
     //Initialize Controllers
     this->friendController.parseJsonObject(this->friendsSnapchatObj);
+    this->storyController.parseJsonObject(this->storiesSnapchatObj);
     //Save authToken used for all requests.
     this->authToken = this->updatesSnapchatObj[AUTH_TOKEN_KEY].toString();
 }
 
-FriendController* Snapchat::getFriendController(){
-    return &this->friendController;
+const FriendController &Snapchat::getFriendController() const {
+    return this->friendController;
+}
+
+const StoryController &Snapchat::getStoryController() const {
+    return this->storyController;
 }

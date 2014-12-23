@@ -16,6 +16,7 @@
 #include "Utils.h"
 #include "NetworkRequestMaker.h"
 
+#include "StoryController.h"
 #include "FriendController.h"
 
 using namespace std::placeholders;
@@ -27,7 +28,9 @@ public:
     Snapchat();
     void login(QString username, QString password);
     void refresh();
-    FriendController *getFriendController();
+    const FriendController &getFriendController() const;
+    const StoryController &getStoryController() const;
+
 
 private slots:
     void onLoginCompleted(int httpCode, QByteArray data);
@@ -46,6 +49,7 @@ private:
     QString authToken;
 
     FriendController friendController;
+    StoryController storyController;
 
     QJsonObject fullSnapchatObj;
     QJsonObject updatesSnapchatObj;

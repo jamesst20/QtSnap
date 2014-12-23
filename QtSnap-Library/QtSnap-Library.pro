@@ -18,14 +18,20 @@ SOURCES += Snapchat.cpp \
     TokenLib.cpp \
     Utils.cpp \
     Friend.cpp \
-    FriendController.cpp
+    FriendController.cpp \
+    StoryController.cpp \
+    Story.cpp \
+    Viewer.cpp
 
 HEADERS += Snapchat.h \
     NetworkRequestMaker.h \
     TokenLib.h \
     Utils.h \
     Friend.h \
-    FriendController.h
+    FriendController.h \
+    StoryController.h \
+    Story.h \
+    Viewer.h
 unix {
     target.path = /usr/lib
     INSTALLS += target
