@@ -15,14 +15,17 @@ void FriendController::parseJsonObject(QJsonObject friendsObj){
     QJsonArray bestFriendsJson = friendsObj[BESTS_KEY].toArray();
 
     //Add friends to list
+    friends.clear();
     for(int i = 0; i < friendsJson.size(); i++){
         friends.append(Friend(friendsJson.at(i).toObject()));
     }
     //Add friends request (basically friends + requests) to list
+    friendRequests.clear();
     for(int i = 0; i < friendRequestsJson.size(); i++){
         friendRequests.append(Friend(friendRequestsJson.at(i).toObject()));
     }
     //Add best friends to list
+    bestFriends.clear();
     for(int i = 0; i < bestFriendsJson.size(); i++){
         bestFriends.append(bestFriendsJson.at(i).toString());
     }
