@@ -40,6 +40,8 @@ signals:
 private:
     void parseSnapchatObjs();
 
+    NetworkRequestMaker *nrm;
+
     QString username;
     QString authToken;
 

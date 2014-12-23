@@ -20,7 +20,7 @@ const QString Snapchat::CHECKSUMS_DICT_KEY = "checksums_dict";
 
 Snapchat::Snapchat()
 {
-
+    this->nrm = new NetworkRequestMaker();
 }
 
 void Snapchat::login(QString username, QString password){
@@ -35,11 +35,7 @@ void Snapchat::login(QString username, QString password){
     params.addQueryItem(PASSWORD_KEY, password);
     params.addQueryItem(FEATURES_MAP_KEY, "{\"all_updates_friends_response\":true}");
 
-
-    NetworkRequestMaker *nrm = new NetworkRequestMaker();
-    connect(nrm, SIGNAL(onRequestDone(int,QByteArray)), this, SLOT(onLoginCompleted(int,QByteArray)));
     nrm->executeRequest(LOGIN_PATH, params, std::bind(&Snapchat::onLoginCompleted, this, _1, _2));
-
 }
 
 void Snapchat::onLoginCompleted(int httpCode, QByteArray data){
@@ -70,10 +66,7 @@ void Snapchat::refresh(){
     params.addQueryItem(FEATURES_MAP_KEY, "{\"all_updates_friends_response\":true}");
     params.addQueryItem(CHECKSUMS_DICT_KEY, "{}");
 
-
-    NetworkRequestMaker *nrm = new NetworkRequestMaker();
-    connect(nrm, SIGNAL(onRequestDone(int,QByteArray)), this, SLOT(onRefreshCompleted(int,QByteArray)));
-    nrm->executeRequest(ALL_UPDATES_PATH, params, std::bind(&Snapchat::onRefreshCompleted, this, _1, _2));
+    this->nrm->executeRequest(ALL_UPDATES_PATH, params, std::bind(&Snapchat::onRefreshCompleted, this, _1, _2));
 }
 
 void Snapchat::onRefreshCompleted(int httpCode, QByteArray data){
