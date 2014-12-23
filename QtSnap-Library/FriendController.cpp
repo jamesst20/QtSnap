@@ -34,14 +34,14 @@ void FriendController::parseJsonObject(QJsonObject friendsObj){
     emit onFriendsRefreshed();
 }
 
-QList<Friend> FriendController::getFriends(){
+const QList<Friend> FriendController::getFriends() const{
     return this->friends;
 }
 
-QList<Friend> FriendController::getFriendRequests(){
+const QList<Friend> FriendController::getFriendRequests() const{
     return this->friendRequests;
 }
 
-QList<QString> FriendController::getBestFriends(){
+const QList<QString> FriendController::getBestFriends() const{
     return this->bestFriends;
 }

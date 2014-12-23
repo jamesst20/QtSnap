@@ -20,9 +20,9 @@ public:
 
     void parseJsonObject(QJsonObject friendsObj);
 
-    QList<Friend> getFriends();
-    QList<Friend> getFriendRequests();
-    QList<QString> getBestFriends();
+    const QList<Friend> getFriends() const;
+    const QList<Friend> getFriendRequests() const;
+    const QList<QString> getBestFriends() const;
 
 signals:
     void onFriendsRefreshed();

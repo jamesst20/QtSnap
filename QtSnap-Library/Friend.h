@@ -9,9 +9,9 @@ class Friend
 public:
     Friend(QJsonObject obj);
 
-    QString getUsername() const;
-    QString getDisplayName() const;
-    bool isAdded();
+    const QString getUsername() const;
+    const QString getDisplayName() const;
+    bool isAdded() const;
 
 private:
     static const QString NAME_KEY;

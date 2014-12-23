@@ -11,14 +11,14 @@ Friend::Friend(QJsonObject obj)
     this->added = obj[TYPE_KEY].toInt() == 0 ? true : false;
 }
 
-QString Friend::getUsername() const{
+const QString Friend::getUsername() const{
     return this->username;
 }
 
-QString Friend::getDisplayName() const {
+const QString Friend::getDisplayName() const {
     return this->displayName;
 }
 
-bool Friend::isAdded(){
+bool Friend::isAdded() const {
     return this->added;
 }
