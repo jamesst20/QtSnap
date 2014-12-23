@@ -1,68 +1,62 @@
 #include "NetworkRequestMaker.h"
 
 const QString NetworkRequestMaker::BASE_URL = "https://feelinsonice-hrd.appspot.com/";
+const QString NetworkRequestMaker::HEADER_USER_AGENT = "Snapchat/8.1.0.8 Beta (A0001; Android 21; gzip)";
+const QString NetworkRequestMaker::HEADER_URL_ENCODED = "application/x-www-form-urlencoded";
 
-NetworkRequestMaker::NetworkRequestMaker(QString url, QUrlQuery params){
+NetworkRequestMaker::NetworkRequestMaker(){
     //Initialize variables
     this->manager = new QNetworkAccessManager(this);
-    this->request = QNetworkRequest(QUrl(BASE_URL + url));
-
-    //Add parameters to a byte array
-    this->parametersByteArray.append(params.toString());
 
     //Connect signals
     connect(this->manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(finished(QNetworkReply*)));
 }
 
-NetworkRequestMaker::NetworkRequestMaker(QString url, QList<QHttpPart> params){
-    //Initialize variables
-    this->manager = new QNetworkAccessManager(this);
-    this->httpMultiPart = new QHttpMultiPart();
-    this->request = QNetworkRequest(QUrl(BASE_URL + url));
-
-    //Add parameters to QHttpMultiPart
-    for(int i = 0; i < params.size(); i++){
-        this->httpMultiPart->append(params.at(i));
-    }
-
-    //Connect signals
-    connect(this->manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(finished(QNetworkReply*)));
+NetworkRequestMaker::~NetworkRequestMaker(){
+    delete this->manager;
 }
 
-void NetworkRequestMaker::executeRequest(){
+void NetworkRequestMaker::executeRequest(const QString &url, const QUrlQuery &params){
+    //Create request
+    QNetworkRequest request = QNetworkRequest(QUrl(BASE_URL + url));
     //Setup headers
     request.setSslConfiguration(QSslConfiguration::defaultConfiguration());
-    request.setHeader(QNetworkRequest::UserAgentHeader, "Snapchat/8.1.0.8 Beta (A0001; Android 21; gzip)");
+    request.setHeader(QNetworkRequest::UserAgentHeader, HEADER_USER_AGENT);
+    request.setHeader(QNetworkRequest::ContentTypeHeader, HEADER_URL_ENCODED);
+    //Add parameters to byte array
+    QByteArray parameters;
+    parameters.append(params.toString());
+    //Execute POST request
+    QNetworkReply *reply = this->manager->post(request, parameters);
+    qDebug() << reply;
+    //Ignore certificates error in case of proxy
+    reply->ignoreSslErrors();
+}
 
-    QNetworkReply *reply;
-
-    if(this->httpMultiPart){
-        request.setHeader(QNetworkRequest::ContentTypeHeader, QHttpMultiPart::FormDataType);
-        //Execute POST request
-        reply = this->manager->post(this->request, this->httpMultiPart);
-
-        //Make sure the reply gets deleted when QHttpMultiPart is deleted
-        this->httpMultiPart->setParent(reply);
-    }else{
-        request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
-
-        //Execute POST request
-        reply = this->manager->post(this->request, this->parametersByteArray);
-
-        //Ignore certificates error in case of proxy
-        reply->ignoreSslErrors();
-
-        //Make sure the reply gets deleted when QNetworkAccessManager is deleted
-        this->manager->setParent(reply);
+void NetworkRequestMaker::executeRequest(const QString &url, const QList<QHttpPart> &params){
+    //Create request
+    QNetworkRequest request = QNetworkRequest(QUrl(BASE_URL + url));
+    //Setup headers
+    request.setSslConfiguration(QSslConfiguration::defaultConfiguration());
+    request.setHeader(QNetworkRequest::UserAgentHeader, HEADER_USER_AGENT);
+    request.setHeader(QNetworkRequest::ContentTypeHeader, QHttpMultiPart::FormDataType);
+    //Add parameters to QHttpMultiPart
+    QHttpMultiPart parameters;
+    for(int i = 0; i < params.size(); i++){
+        parameters.append(params.at(i));
     }
+    //Execute POST request
+    QNetworkReply *reply = this->manager->post(request, &parameters);
+
+    //Ignore certificates error in case of proxy
+    reply->ignoreSslErrors();
 }
 
 void NetworkRequestMaker::finished(QNetworkReply *reply){
+    //Read output data
     QByteArray dataRead = reply->readAll();
-    emit onRequestDone(QVariant(reply->attribute(QNetworkRequest::HttpStatusCodeAttribute)).toInt(), dataRead);
     //Log request history
-    Utils::log("Request to " + this->request.url().toString() + " Result : " + dataRead);
-
-    //Free memory automatically. This class can't be reused.
-    this->deleteLater();
+    Utils::log("Request to " + reply->url().toString() + " Result : " + dataRead);
+    //Emit signal telling the request is done
+    emit onRequestDone(QVariant(reply->attribute(QNetworkRequest::HttpStatusCodeAttribute)).toInt(), dataRead);
 }

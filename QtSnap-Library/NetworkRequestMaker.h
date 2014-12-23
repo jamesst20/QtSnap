@@ -25,23 +25,25 @@ class NetworkRequestMaker : public QObject
     Q_OBJECT
 public:
     ///
-    /// \brief NetworkRequestMaker Create a basic x-www-form-urlencoded POST request.
-    /// \param url URL to send the POST request.
+    /// \brief NetworkRequestMaker Initialize the NetworkRequestMaker.
+    ///
+    NetworkRequestMaker();
+
+    ///
+    /// \brief executeRequest Execute a basic x-www-form-urlencoded POST request.
+    /// \param url URL where to send the POST request.
     /// \param params Parameters of the request.
     ///
-    NetworkRequestMaker(QString url, QUrlQuery params);
+    void executeRequest(const QString &url, const QUrlQuery &params);
 
     ///
-    /// \brief NetworkRequestMaker Create a basic multipart/form-data POST request.
-    /// \param url URL to send the POST request.
+    /// \brief executeRequest Execute a basic multipart/form-data POST request.
+    /// \param url URL where to send the POST request.
     /// \param params Parameters of the request. This can include files.
     ///
-    NetworkRequestMaker(QString url, QList<QHttpPart> params);
+    void executeRequest(const QString &url, const QList<QHttpPart> &params);
 
-    ///
-    /// \brief executeRequest Execute the request
-    ///
-    void executeRequest();
+    ~NetworkRequestMaker();
 signals:
     ///
     /// \brief onRequestDone Signal emited once the request has been completed.
@@ -55,12 +57,10 @@ private slots:
 
 private:
     QNetworkAccessManager *manager = 0;
-    QHttpMultiPart *httpMultiPart = 0;
-    QNetworkRequest request;
-    QByteArray parametersByteArray;
-    QUrlQuery parameters;
 
     static const QString BASE_URL;
+    static const QString HEADER_USER_AGENT;
+    static const QString HEADER_URL_ENCODED;
 };
 
 #endif // NETWORKREQUESTMAKER_H

@@ -36,9 +36,9 @@ void Snapchat::login(QString username, QString password){
     params.addQueryItem(FEATURES_MAP_KEY, "{\"all_updates_friends_response\":true}");
 
 
-    NetworkRequestMaker *nrm = new NetworkRequestMaker(LOGIN_PATH, params);
+    NetworkRequestMaker *nrm = new NetworkRequestMaker();
     connect(nrm, SIGNAL(onRequestDone(int,QByteArray)), this, SLOT(onLoginCompleted(int,QByteArray)));
-    nrm->executeRequest();
+    nrm->executeRequest(LOGIN_PATH, params);
 
 }
 
@@ -71,9 +71,9 @@ void Snapchat::refresh(){
     params.addQueryItem(CHECKSUMS_DICT_KEY, "{}");
 
 
-    NetworkRequestMaker *nrm = new NetworkRequestMaker(ALL_UPDATES_PATH, params);
+    NetworkRequestMaker *nrm = new NetworkRequestMaker();
     connect(nrm, SIGNAL(onRequestDone(int,QByteArray)), this, SLOT(onRefreshCompleted(int,QByteArray)));
-    nrm->executeRequest();
+    nrm->executeRequest(ALL_UPDATES_PATH, params);
 }
 
 void Snapchat::onRefreshCompleted(int httpCode, QByteArray data){
