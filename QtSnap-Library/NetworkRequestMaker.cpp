@@ -16,7 +16,7 @@ NetworkRequestMaker::~NetworkRequestMaker(){
     delete this->manager;
 }
 
-void NetworkRequestMaker::executeRequest(const QString &url, const QUrlQuery &params){
+void NetworkRequestMaker::executeRequest(const QString &url, const QUrlQuery &params, std::function<void(int, QByteArray)> callback_function){
     //Create request
     QNetworkRequest request = QNetworkRequest(QUrl(BASE_URL + url));
     //Setup headers
@@ -28,12 +28,13 @@ void NetworkRequestMaker::executeRequest(const QString &url, const QUrlQuery &pa
     parameters.append(params.toString());
     //Execute POST request
     QNetworkReply *reply = this->manager->post(request, parameters);
-    qDebug() << reply;
     //Ignore certificates error in case of proxy
     reply->ignoreSslErrors();
+    //Add to callback list
+    this->callback_list.insert(reply, callback_function);
 }
 
-void NetworkRequestMaker::executeRequest(const QString &url, const QList<QHttpPart> &params){
+void NetworkRequestMaker::executeRequest(const QString &url, const QList<QHttpPart> &params, std::function<void(int, QByteArray)> callback_function){
     //Create request
     QNetworkRequest request = QNetworkRequest(QUrl(BASE_URL + url));
     //Setup headers
@@ -47,9 +48,10 @@ void NetworkRequestMaker::executeRequest(const QString &url, const QList<QHttpPa
     }
     //Execute POST request
     QNetworkReply *reply = this->manager->post(request, &parameters);
-
     //Ignore certificates error in case of proxy
     reply->ignoreSslErrors();
+    //Add to callback list
+    this->callback_list.insert(reply, callback_function);
 }
 
 void NetworkRequestMaker::finished(QNetworkReply *reply){
@@ -57,6 +59,8 @@ void NetworkRequestMaker::finished(QNetworkReply *reply){
     QByteArray dataRead = reply->readAll();
     //Log request history
     Utils::log("Request to " + reply->url().toString() + " Result : " + dataRead);
-    //Emit signal telling the request is done
-    emit onRequestDone(QVariant(reply->attribute(QNetworkRequest::HttpStatusCodeAttribute)).toInt(), dataRead);
+    //Get the callback function
+    std::function<void(int, QByteArray)> callbackFunction = this->callback_list.take(reply);
+    //Call it
+    callbackFunction(QVariant(reply->attribute(QNetworkRequest::HttpStatusCodeAttribute)).toInt(), dataRead);
 }

@@ -38,7 +38,7 @@ void Snapchat::login(QString username, QString password){
 
     NetworkRequestMaker *nrm = new NetworkRequestMaker();
     connect(nrm, SIGNAL(onRequestDone(int,QByteArray)), this, SLOT(onLoginCompleted(int,QByteArray)));
-    nrm->executeRequest(LOGIN_PATH, params);
+    nrm->executeRequest(LOGIN_PATH, params, std::bind(&Snapchat::onLoginCompleted, this, _1, _2));
 
 }
 
@@ -73,7 +73,7 @@ void Snapchat::refresh(){
 
     NetworkRequestMaker *nrm = new NetworkRequestMaker();
     connect(nrm, SIGNAL(onRequestDone(int,QByteArray)), this, SLOT(onRefreshCompleted(int,QByteArray)));
-    nrm->executeRequest(ALL_UPDATES_PATH, params);
+    nrm->executeRequest(ALL_UPDATES_PATH, params, std::bind(&Snapchat::onRefreshCompleted, this, _1, _2));
 }
 
 void Snapchat::onRefreshCompleted(int httpCode, QByteArray data){

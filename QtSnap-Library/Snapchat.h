@@ -6,6 +6,8 @@
 
 #include <QString>
 #include <QJsonDocument>
+#include <functional>
+
 #include <QJsonObject>
 #include <QJsonArray>
 
@@ -16,6 +18,7 @@
 
 #include "FriendController.h"
 
+using namespace std::placeholders;
 
 class Snapchat : public QObject
 {

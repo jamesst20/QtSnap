@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include <QDebug>
-#include <QList>
+#include <QHash>
 #include <QString>
 #include <QFile>
 
@@ -13,6 +13,8 @@
 #include <QSslConfiguration>
 #include <QNetworkRequest>
 #include <QNetworkReply>
+
+#include <functional>
 
 #include <QHttpMultiPart>
 #include <QHttpPart>
@@ -33,30 +35,26 @@ public:
     /// \brief executeRequest Execute a basic x-www-form-urlencoded POST request.
     /// \param url URL where to send the POST request.
     /// \param params Parameters of the request.
+    /// \param callback_function Function to callback when the request is done.
     ///
-    void executeRequest(const QString &url, const QUrlQuery &params);
+    void executeRequest(const QString &url, const QUrlQuery &params, std::function<void(int, QByteArray)> callback_function);
 
     ///
     /// \brief executeRequest Execute a basic multipart/form-data POST request.
     /// \param url URL where to send the POST request.
     /// \param params Parameters of the request. This can include files.
+    /// \param callback_function Function to callback when the request is done.
     ///
-    void executeRequest(const QString &url, const QList<QHttpPart> &params);
+    void executeRequest(const QString &url, const QList<QHttpPart> &params, std::function<void(int, QByteArray)> callback_function);
 
     ~NetworkRequestMaker();
-signals:
-    ///
-    /// \brief onRequestDone Signal emited once the request has been completed.
-    /// \param httpCode HTTP status code.
-    /// \param output Data received.
-    ///
-    void onRequestDone(int httpCode, QByteArray output);
 
 private slots:
     void finished(QNetworkReply*);
 
 private:
     QNetworkAccessManager *manager = 0;
+    QHash<QNetworkReply*, std::function<void(int, QByteArray)>> callback_list;
 
     static const QString BASE_URL;
     static const QString HEADER_USER_AGENT;
