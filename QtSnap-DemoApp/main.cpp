@@ -2,7 +2,6 @@
 
 #include "Snapchat.h"
 
-static Snapchat snapchat;
 static QTextStream in(stdin);
 static QTextStream out(stdout);
 
@@ -22,6 +21,8 @@ void onLoginCompletted(bool success, QString reason){
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
+
+    Snapchat snapchat;
 
     //Event loop used to force waiting for a signal
     QEventLoop loop;
