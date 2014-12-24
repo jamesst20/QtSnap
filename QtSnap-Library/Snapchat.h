@@ -11,13 +11,13 @@
 #include <QJsonObject>
 #include <QJsonArray>
 
-#include "FriendController.h"
 #include "TokenLib.h"
 #include "Utils.h"
 #include "NetworkRequestMaker.h"
 
 #include "StoryController.h"
 #include "FriendController.h"
+#include "ConversationController.h"
 
 using namespace std::placeholders;
 
@@ -30,6 +30,7 @@ public:
     void refresh();
     const FriendController &getFriendController() const;
     const StoryController &getStoryController() const;
+    const ConversationController &getConversationController() const;
 
 
 private slots:
@@ -50,6 +51,7 @@ private:
 
     FriendController friendController;
     StoryController storyController;
+    ConversationController conversationController;
 
     QJsonObject fullSnapchatObj;
     QJsonObject updatesSnapchatObj;

@@ -21,7 +21,9 @@ SOURCES += Snapchat.cpp \
     FriendController.cpp \
     StoryController.cpp \
     Story.cpp \
-    Viewer.cpp
+    Viewer.cpp \
+    Snap.cpp \
+    ConversationController.cpp
 
 HEADERS += Snapchat.h \
     NetworkRequestMaker.h \
@@ -31,7 +33,9 @@ HEADERS += Snapchat.h \
     FriendController.h \
     StoryController.h \
     Story.h \
-    Viewer.h
+    Viewer.h \
+    Snap.h \
+    ConversationController.h
 unix {
     target.path = /usr/lib
     INSTALLS += target
