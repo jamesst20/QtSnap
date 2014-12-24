@@ -12,7 +12,6 @@ StoryController::StoryController()
 void StoryController::parseJsonObject(QJsonObject storyObj){
     QJsonArray myStoriesArray = storyObj[MY_STORIES_KEY].toArray();
     QJsonArray friendStoriesArray = storyObj[FRIEND_STORIES_KEY].toArray();
-    qDebug() << "Friend stories array : " << friendStoriesArray.size();
     //Parse my stories
     this->myStories.clear();
     for(int i = 0; i < myStoriesArray.size(); i++){
