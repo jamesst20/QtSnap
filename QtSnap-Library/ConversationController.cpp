@@ -24,6 +24,6 @@ void ConversationController::parseJsonObject(QJsonArray convsArray){
     }
 }
 
-const QList<Snap> ConversationController::getSnaps() const {
+const QList<Snap> &ConversationController::getSnaps() const {
     return this->snaps;
 }

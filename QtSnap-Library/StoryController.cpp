@@ -30,10 +30,10 @@ void StoryController::parseJsonObject(QJsonObject storyObj){
     }
 }
 
-const QList<Story> StoryController::getMyStories() const{
+const QList<Story> &StoryController::getMyStories() const{
     return this->myStories;
 }
 
-const QList<Story> StoryController::getStories() const{
+const QList<Story> &StoryController::getStories() const{
     return this->othersStories;
 }

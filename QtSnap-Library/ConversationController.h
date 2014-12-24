@@ -14,7 +14,7 @@ public:
 
     void parseJsonObject(QJsonArray convsArray);
 
-    const QList<Snap> getSnaps() const;
+    const QList<Snap> &getSnaps() const;
 private:
     QList<Snap> snaps;
 

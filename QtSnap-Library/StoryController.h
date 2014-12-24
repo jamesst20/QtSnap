@@ -18,8 +18,8 @@ public:
 
     void parseJsonObject(QJsonObject storyObj);
 
-    const QList<Story> getMyStories() const;
-    const QList<Story> getStories() const;
+    const QList<Story> &getMyStories() const;
+    const QList<Story> &getStories() const;
 
 private:
     QList<Story> othersStories;
