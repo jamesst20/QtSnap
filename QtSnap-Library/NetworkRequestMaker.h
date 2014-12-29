@@ -47,6 +47,14 @@ public:
     ///
     void executeRequest(const QString &url, const QList<QHttpPart> &params, std::function<void(int, QByteArray)> callback_function);
 
+    ///
+    /// \brief executeRequest Execute a basic GET request.
+    /// \param url URL where to send GET request;
+    /// \param params Parameters of the request.
+    /// \param callback_function Function to callback when the request is done.
+    ///
+    void executeRequest(const QString &url, const QHash<QString, QString> &params, std::function<void(int, QByteArray)> callback_function);
+
     ~NetworkRequestMaker();
 
 private slots:

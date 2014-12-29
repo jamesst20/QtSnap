@@ -54,6 +54,25 @@ void NetworkRequestMaker::executeRequest(const QString &url, const QList<QHttpPa
     this->callback_list.insert(reply, callback_function);
 }
 
+void NetworkRequestMaker::executeRequest(const QString &url, const QHash<QString, QString> &params, std::function<void(int, QByteArray)> callback_function){
+    QString urlWithParameters = url;
+    //Add parameters to URL
+    for(int i = 0; i < params.size(); i++){
+        urlWithParameters += (i == 0 ? "?" : "&") + params.keys().at(i) + "=" + params.values().at(i);
+    }
+    //Create request
+    QNetworkRequest request = QNetworkRequest(QUrl(BASE_URL + urlWithParameters));
+    //Setup headers
+    request.setSslConfiguration(QSslConfiguration::defaultConfiguration());
+    request.setHeader(QNetworkRequest::UserAgentHeader, HEADER_USER_AGENT);
+    //Execute GET request
+    QNetworkReply *reply = this->manager->get(request);
+    //Ignore certificates error in case of proxy
+    reply->ignoreSslErrors();
+    //Add to callback list
+    this->callback_list.insert(reply, callback_function);
+}
+
 void NetworkRequestMaker::finished(QNetworkReply *reply){
     //Read output data
     QByteArray dataRead = reply->readAll();
