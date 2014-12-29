@@ -23,7 +23,8 @@ SOURCES += Snapchat.cpp \
     Story.cpp \
     Viewer.cpp \
     Snap.cpp \
-    ConversationController.cpp
+    ConversationController.cpp \
+    Encryption.cpp
 
 HEADERS += Snapchat.h \
     NetworkRequestMaker.h \
@@ -35,8 +36,11 @@ HEADERS += Snapchat.h \
     Story.h \
     Viewer.h \
     Snap.h \
-    ConversationController.h
-unix {
-    target.path = /usr/lib
-    INSTALLS += target
-}
+    ConversationController.h \
+    Encryption.h
+
+
+win32: LIBS += -L$$PWD/../libs/QCA/bin/ -llibqca
+
+INCLUDEPATH += $$PWD/../libs/QCA/includes
+DEPENDPATH += $$PWD/../libs/QCA/includes
