@@ -16,7 +16,7 @@ NetworkRequestMaker::~NetworkRequestMaker(){
     delete this->manager;
 }
 
-void NetworkRequestMaker::executeRequest(const QString &url, const QUrlQuery &params, std::function<void(int, QByteArray)> callback_function){
+void NetworkRequestMaker::executeRequest(int id, const QString &url, const QUrlQuery &params, std::function<void(int, int, QByteArray)> callback_function){
     //Create request
     QNetworkRequest request = QNetworkRequest(QUrl(BASE_URL + url));
     //Setup headers
@@ -31,10 +31,10 @@ void NetworkRequestMaker::executeRequest(const QString &url, const QUrlQuery &pa
     //Ignore certificates error in case of proxy
     reply->ignoreSslErrors();
     //Add to callback list
-    this->callback_list.insert(reply, callback_function);
+    this->callback_list.insert(reply, RequestCallbackInfo(id, callback_function));
 }
 
-void NetworkRequestMaker::executeRequest(const QString &url, const QList<QHttpPart> &params, std::function<void(int, QByteArray)> callback_function){
+void NetworkRequestMaker::executeRequest(int id, const QString &url, const QList<QHttpPart> &params, std::function<void(int, int, QByteArray)> callback_function){
     //Create request
     QNetworkRequest request = QNetworkRequest(QUrl(BASE_URL + url));
     //Setup headers
@@ -51,10 +51,10 @@ void NetworkRequestMaker::executeRequest(const QString &url, const QList<QHttpPa
     //Ignore certificates error in case of proxy
     reply->ignoreSslErrors();
     //Add to callback list
-    this->callback_list.insert(reply, callback_function);
+    this->callback_list.insert(reply, RequestCallbackInfo(id, callback_function));
 }
 
-void NetworkRequestMaker::executeRequest(const QString &url, const QHash<QString, QString> &params, std::function<void(int, QByteArray)> callback_function){
+void NetworkRequestMaker::executeRequest(int id, const QString &url, const QHash<QString, QString> &params, std::function<void(int, int, QByteArray)> callback_function){
     QString urlWithParameters = url;
     //Add parameters to URL
     for(int i = 0; i < params.size(); i++){
@@ -70,7 +70,7 @@ void NetworkRequestMaker::executeRequest(const QString &url, const QHash<QString
     //Ignore certificates error in case of proxy
     reply->ignoreSslErrors();
     //Add to callback list
-    this->callback_list.insert(reply, callback_function);
+    this->callback_list.insert(reply, RequestCallbackInfo(id, callback_function));
 }
 
 void NetworkRequestMaker::finished(QNetworkReply *reply){
@@ -78,8 +78,10 @@ void NetworkRequestMaker::finished(QNetworkReply *reply){
     QByteArray dataRead = reply->readAll();
     //Log request history
     Utils::log("Request to " + reply->url().toString() + " Result : " + dataRead);
+    //Get request callback info
+    RequestCallbackInfo reqCallInfo = this->callback_list.take(reply);
     //Get the callback function
-    std::function<void(int, QByteArray)> callbackFunction = this->callback_list.take(reply);
+    std::function<void(int, int, QByteArray)> callbackFunction = reqCallInfo.callback_func;
     //Call it
-    callbackFunction(QVariant(reply->attribute(QNetworkRequest::HttpStatusCodeAttribute)).toInt(), dataRead);
+    callbackFunction(reqCallInfo.id, QVariant(reply->attribute(QNetworkRequest::HttpStatusCodeAttribute)).toInt(), dataRead);
 }

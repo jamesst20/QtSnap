@@ -35,10 +35,10 @@ void Snapchat::login(QString username, QString password){
     params.addQueryItem(PASSWORD_KEY, password);
     params.addQueryItem(FEATURES_MAP_KEY, "{\"all_updates_friends_response\":true}");
 
-    nrm->executeRequest(LOGIN_PATH, params, std::bind(&Snapchat::onLoginCompleted, this, _1, _2));
+    nrm->executeRequest(0, LOGIN_PATH, params, std::bind(&Snapchat::onLoginCompleted, this, _1, _2, _3));
 }
 
-void Snapchat::onLoginCompleted(int httpCode, QByteArray data){
+void Snapchat::onLoginCompleted(int id, int httpCode, QByteArray data){
     QJsonParseError jsonError;
     QJsonDocument fullSnapchatDoc = QJsonDocument::fromJson(data, &jsonError);
 
@@ -66,10 +66,10 @@ void Snapchat::refresh(){
     params.addQueryItem(FEATURES_MAP_KEY, "{\"all_updates_friends_response\":true}");
     params.addQueryItem(CHECKSUMS_DICT_KEY, "{}");
 
-    this->nrm->executeRequest(ALL_UPDATES_PATH, params, std::bind(&Snapchat::onRefreshCompleted, this, _1, _2));
+    this->nrm->executeRequest(0, ALL_UPDATES_PATH, params, std::bind(&Snapchat::onRefreshCompleted, this, _1, _2, _3));
 }
 
-void Snapchat::onRefreshCompleted(int httpCode, QByteArray data){
+void Snapchat::onRefreshCompleted(int id, int httpCode, QByteArray data){
     if(httpCode >= 200 && httpCode < 300){
         this->fullSnapchatObj = QJsonDocument::fromJson(data).object();
         parseSnapchatObjs();

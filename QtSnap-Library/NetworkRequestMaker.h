@@ -2,7 +2,6 @@
 #define NETWORKREQUESTMAKER_H
 
 #include <QObject>
-#include <QDebug>
 #include <QHash>
 #include <QString>
 #include <QFile>
@@ -33,27 +32,30 @@ public:
 
     ///
     /// \brief executeRequest Execute a basic x-www-form-urlencoded POST request.
+    /// \param id Integer returned by the finished signal. Useful for retrieving which request has finished.
     /// \param url URL where to send the POST request.
     /// \param params Parameters of the request.
     /// \param callback_function Function to callback when the request is done.
     ///
-    void executeRequest(const QString &url, const QUrlQuery &params, std::function<void(int, QByteArray)> callback_function);
+    void executeRequest(int id, const QString &url, const QUrlQuery &params, std::function<void(int, int, QByteArray)> callback_function);
 
     ///
     /// \brief executeRequest Execute a basic multipart/form-data POST request.
+    /// \param id Integer returned by the finished signal. Useful for retrieving which request has finished.
     /// \param url URL where to send the POST request.
     /// \param params Parameters of the request. This can include files.
     /// \param callback_function Function to callback when the request is done.
     ///
-    void executeRequest(const QString &url, const QList<QHttpPart> &params, std::function<void(int, QByteArray)> callback_function);
+    void executeRequest(int id, const QString &url, const QList<QHttpPart> &params, std::function<void(int, int, QByteArray)> callback_function);
 
     ///
     /// \brief executeRequest Execute a basic GET request.
+    /// \param id Integer returned by the finished signal. Useful for retrieving which request has finished.
     /// \param url URL where to send GET request;
     /// \param params Parameters of the request.
     /// \param callback_function Function to callback when the request is done.
     ///
-    void executeRequest(const QString &url, const QHash<QString, QString> &params, std::function<void(int, QByteArray)> callback_function);
+    void executeRequest(int id, const QString &url, const QHash<QString, QString> &params, std::function<void(int, int, QByteArray)> callback_function);
 
     ~NetworkRequestMaker();
 
@@ -62,7 +64,15 @@ private slots:
 
 private:
     QNetworkAccessManager *manager = 0;
-    QHash<QNetworkReply*, std::function<void(int, QByteArray)>> callback_list;
+
+    struct RequestCallbackInfo {
+        int id;
+        std::function<void(int, int, QByteArray)> callback_func;
+        RequestCallbackInfo(){}
+        RequestCallbackInfo(int id, std::function<void(int, int, QByteArray)> callback_func) {this->id = id; this->callback_func = callback_func;}
+    };
+
+    QHash<QNetworkReply*, RequestCallbackInfo> callback_list;
 
     static const QString BASE_URL;
     static const QString HEADER_USER_AGENT;

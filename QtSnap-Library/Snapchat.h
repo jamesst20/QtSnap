@@ -35,8 +35,8 @@ public:
 
 
 private slots:
-    void onLoginCompleted(int httpCode, QByteArray data);
-    void onRefreshCompleted(int httpCode, QByteArray data);
+    void onLoginCompleted(int id, int httpCode, QByteArray data);
+    void onRefreshCompleted(int id, int httpCode, QByteArray data);
 
 signals:
     void loginCompleted(bool success, QString reason);
