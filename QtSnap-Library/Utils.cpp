@@ -2,11 +2,7 @@
 
 QFile *Utils::file_log = 0;
 
-void Utils::log(QByteArray bytes){
-    Utils::log(bytes);
-}
-
-void Utils::log(QString bytes){
+void Utils::log(QString text){
     if (!file_log){
         if (QFile::exists("./logs.txt")){
             QFile::remove("./logs.txt");
@@ -16,5 +12,5 @@ void Utils::log(QString bytes){
     }
     QTextStream out(file_log);
     out.setCodec("UTF-8");
-    out << bytes << "\n";
+    out << text << "\n";
 }
