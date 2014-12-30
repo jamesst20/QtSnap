@@ -20,22 +20,23 @@ const QString Snapchat::CHECKSUMS_DICT_KEY = "checksums_dict";
 
 Snapchat::Snapchat()
 {
-    this->nrm = new NetworkRequestMaker();
+    this->conversationController.initialize(this);
 }
 
 void Snapchat::login(QString username, QString password){
-    this->username = username;
+    //Lower case is very important. --> 401 Unautorized.
+    this->username = username.toLower();
 
     QUrlQuery params;
 
-    long timestamp = QDateTime::currentMSecsSinceEpoch();
+    qint64 timestamp = QDateTime::currentMSecsSinceEpoch();
     params.addQueryItem(USERNAME_KEY, username);
     params.addQueryItem(TIMESTAMP_KEY, QString::number(timestamp));
     params.addQueryItem(REQ_TOKEN_KEY, TokenLib::getStaticRequestToken(timestamp));
     params.addQueryItem(PASSWORD_KEY, password);
     params.addQueryItem(FEATURES_MAP_KEY, "{\"all_updates_friends_response\":true}");
 
-    nrm->executeRequest(0, LOGIN_PATH, params, std::bind(&Snapchat::onLoginCompleted, this, _1, _2, _3));
+    nrm.executeRequest(0, LOGIN_PATH, params, std::bind(&Snapchat::onLoginCompleted, this, _1, _2, _3));
 }
 
 void Snapchat::onLoginCompleted(int, int httpCode, QByteArray data){
@@ -59,14 +60,14 @@ void Snapchat::onLoginCompleted(int, int httpCode, QByteArray data){
 void Snapchat::refresh(){
     QUrlQuery params;
 
-    long timestamp = QDateTime::currentMSecsSinceEpoch();
+    qint64 timestamp = QDateTime::currentMSecsSinceEpoch();
     params.addQueryItem(USERNAME_KEY, username);
     params.addQueryItem(TIMESTAMP_KEY, QString::number(timestamp));
     params.addQueryItem(REQ_TOKEN_KEY, TokenLib::getRequestToken(authToken, timestamp));
     params.addQueryItem(FEATURES_MAP_KEY, "{\"all_updates_friends_response\":true}");
     params.addQueryItem(CHECKSUMS_DICT_KEY, "{}");
 
-    this->nrm->executeRequest(0, ALL_UPDATES_PATH, params, std::bind(&Snapchat::onRefreshCompleted, this, _1, _2, _3));
+    this->nrm.executeRequest(0, ALL_UPDATES_PATH, params, std::bind(&Snapchat::onRefreshCompleted, this, _1, _2, _3));
 }
 
 void Snapchat::onRefreshCompleted(int, int httpCode, QByteArray data){
@@ -93,14 +94,26 @@ void Snapchat::parseSnapchatObjs(){
     this->authToken = this->updatesSnapchatObj[AUTH_TOKEN_KEY].toString();
 }
 
-const FriendController &Snapchat::getFriendController() const {
+const QString& Snapchat::getUsername() const {
+    return this->username;
+}
+
+const QString& Snapchat::getAuthToken() const {
+    return this->authToken;
+}
+
+NetworkRequestMaker& Snapchat::getNetworkRequestMaker() {
+    return this->nrm;
+}
+
+FriendController& Snapchat::getFriendController() {
     return this->friendController;
 }
 
-const StoryController &Snapchat::getStoryController() const {
+StoryController& Snapchat::getStoryController() {
     return this->storyController;
 }
 
-const ConversationController &Snapchat::getConversationController() const {
+ConversationController& Snapchat::getConversationController() {
     return this->conversationController;
 }

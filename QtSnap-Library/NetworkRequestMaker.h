@@ -74,7 +74,7 @@ private:
 
     QHash<QNetworkReply*, RequestCallbackInfo> callback_list;
 
-    static const QString BASE_URL;
+    static QString BASE_URL;
     static const QString HEADER_USER_AGENT;
     static const QString HEADER_URL_ENCODED;
 };

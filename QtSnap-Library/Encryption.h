@@ -1,8 +1,10 @@
 #ifndef ENCRYPTION_H
 #define ENCRYPTION_H
 
-#include <QByteArray>
+
+#include <QUuid>
 #include <QDebug>
+#include <QByteArray>
 
 #include <QtCrypto/QtCrypto>
 
@@ -12,6 +14,8 @@ public:
     static QByteArray encryptSnapOrStory(QByteArray data);
     static QByteArray decryptSnap(QByteArray data);
     static QByteArray decryptStory(QByteArray data, QString keyStr, QString ivStr);
+
+    static QString randomMediaID(QString username);
 
 private:
     static QByteArray& PKCS7Padding(QByteArray &bytes);

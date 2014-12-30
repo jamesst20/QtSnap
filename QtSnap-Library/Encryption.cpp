@@ -97,3 +97,7 @@ QByteArray& Encryption::RemovePKCS7Padding(QByteArray &bytes){
     bytes.remove(bytes.length() - bytesCountToRemove, bytesCountToRemove);
     return bytes;
 }
+
+QString Encryption::randomMediaID(QString username){
+    return QString(username + "~" + QUuid::createUuid().toString().replace("{", "").replace("}", "")).toUpper();
+}

@@ -7,8 +7,8 @@
 class TokenLib
 {
 public:
-    static QString getRequestToken(QString token, long timestamp);
-    static QString getStaticRequestToken(long timestamp);
+    static QString getRequestToken(QString token, qint64 timestamp);
+    static QString getStaticRequestToken(qint64 timestamp);
 
 private:
     static const QString SECRET;

@@ -4,7 +4,7 @@ const QString TokenLib::SECRET = "iEk21fuwZApXlz93750dmW22pw389dPwOk";
 const QString TokenLib::PATTERN = "0001110111101110001111010101111011010001001110011000110001000110";
 const QString TokenLib::STATIC_TOKEN = "m198sOkJEn37DjqZ32lpRu76xmw288xSQ9";
 
-QString TokenLib::getRequestToken(QString token, long timestamp){
+QString TokenLib::getRequestToken(QString token, qint64 timestamp){
     QString firstHex = hexDigest(TokenLib::SECRET + token);
     QString secondHex = hexDigest(QString::number(timestamp) + TokenLib::SECRET);
 
@@ -22,7 +22,7 @@ QString TokenLib::getRequestToken(QString token, long timestamp){
     return requestToken;
 }
 
-QString TokenLib::getStaticRequestToken(long timestamp){
+QString TokenLib::getStaticRequestToken(qint64 timestamp){
     return getRequestToken(TokenLib::STATIC_TOKEN, timestamp);
 }
 

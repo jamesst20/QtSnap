@@ -1,6 +1,6 @@
 #include "NetworkRequestMaker.h"
 
-const QString NetworkRequestMaker::BASE_URL = "https://feelinsonice-hrd.appspot.com/";
+QString NetworkRequestMaker::BASE_URL = "https://feelinsonice-hrd.appspot.com/";
 const QString NetworkRequestMaker::HEADER_USER_AGENT = "Snapchat/8.1.0.8 Beta (A0001; Android 21; gzip)";
 const QString NetworkRequestMaker::HEADER_URL_ENCODED = "application/x-www-form-urlencoded";
 
@@ -37,17 +37,17 @@ void NetworkRequestMaker::executeRequest(int id, const QString &url, const QUrlQ
 void NetworkRequestMaker::executeRequest(int id, const QString &url, const QList<QHttpPart> &params, std::function<void(int, int, QByteArray)> callback_function){
     //Create request
     QNetworkRequest request = QNetworkRequest(QUrl(BASE_URL + url));
+    //Add parameters to QHttpMultiPart
+    QHttpMultiPart *parameters = new QHttpMultiPart(this->manager);
+    for(int i = 0; i < params.size(); i++){
+        parameters->append(params.at(i));
+    }
     //Setup headers
     request.setSslConfiguration(QSslConfiguration::defaultConfiguration());
     request.setHeader(QNetworkRequest::UserAgentHeader, HEADER_USER_AGENT);
-    request.setHeader(QNetworkRequest::ContentTypeHeader, QHttpMultiPart::FormDataType);
-    //Add parameters to QHttpMultiPart
-    QHttpMultiPart parameters;
-    for(int i = 0; i < params.size(); i++){
-        parameters.append(params.at(i));
-    }
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "multipart/form-data; boundary=" + parameters->boundary());
     //Execute POST request
-    QNetworkReply *reply = this->manager->post(request, &parameters);
+    QNetworkReply *reply = this->manager->post(request, parameters);
     //Ignore certificates error in case of proxy
     reply->ignoreSslErrors();
     //Add to callback list

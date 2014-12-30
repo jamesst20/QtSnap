@@ -27,11 +27,16 @@ class Snapchat : public QObject
     Q_OBJECT
 public:
     Snapchat();
+
     void login(QString username, QString password);
     void refresh();
-    const FriendController &getFriendController() const;
-    const StoryController &getStoryController() const;
-    const ConversationController &getConversationController() const;
+
+    const QString& getUsername() const;
+    const QString& getAuthToken() const;
+    NetworkRequestMaker& getNetworkRequestMaker();
+    FriendController& getFriendController();
+    StoryController& getStoryController();
+    ConversationController& getConversationController();
 
 
 private slots:
@@ -45,7 +50,7 @@ signals:
 private:
     void parseSnapchatObjs();
 
-    NetworkRequestMaker *nrm;
+    NetworkRequestMaker nrm;
 
     QString username;
     QString authToken;
