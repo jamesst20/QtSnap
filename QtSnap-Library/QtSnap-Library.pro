@@ -24,7 +24,8 @@ SOURCES += Snapchat.cpp \
     Viewer.cpp \
     Snap.cpp \
     ConversationController.cpp \
-    Encryption.cpp
+    Encryption.cpp \
+    Crypto/aes.cpp
 
 HEADERS += Snapchat.h \
     NetworkRequestMaker.h \
@@ -37,10 +38,5 @@ HEADERS += Snapchat.h \
     Viewer.h \
     Snap.h \
     ConversationController.h \
-    Encryption.h
-
-
-win32: LIBS += -L$$PWD/../libs/QCA/bin/ -llibqca
-
-INCLUDEPATH += $$PWD/../libs/QCA/includes
-DEPENDPATH += $$PWD/../libs/QCA/includes
+    Encryption.h \
+    Crypto/aes.h

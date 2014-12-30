@@ -26,8 +26,3 @@ DEPENDPATH += $$PWD/../QtSnap-Library
 
 win32:!win32-g++: PRE_TARGETDEPS += $$PWD/../build-QtSnap-Library-Desktop_Qt_5_4_0_MinGW_32bit-Debug/debug/QtSnap-Library.lib
 else:win32-g++: PRE_TARGETDEPS += $$PWD/../build-QtSnap-Library-Desktop_Qt_5_4_0_MinGW_32bit-Debug/debug/libQtSnap-Library.a
-
-win32: LIBS += -L$$PWD/../libs/QCA/bin/ -llibqca
-
-INCLUDEPATH += $$PWD/../libs/QCA/includes
-DEPENDPATH += $$PWD/../libs/QCA/includes

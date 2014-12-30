@@ -8,6 +8,8 @@
 
 #include <QtCrypto/QtCrypto>
 
+#include "Crypto/aes.h"
+
 class Encryption
 {
 public:

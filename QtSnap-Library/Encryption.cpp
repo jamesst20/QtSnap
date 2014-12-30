@@ -3,75 +3,51 @@
 const QString Encryption::AES_KEY = "M02cnQ51Ji97vwT4";
 
 QByteArray Encryption::encryptSnapOrStory(QByteArray data){
-    QCA::Initializer init;
-    QByteArray encrypted;
-
-    if(!QCA::isSupported("aes128-ecb")){
-        qDebug() << "AES128-ECB not supported!\n";
-    } else {
-        QCA::SymmetricKey key(AES_KEY.toUtf8());
-
-        QCA::Cipher cipher(QString("aes128"),
-                           QCA::Cipher::ECB,
-                           QCA::Cipher::NoPadding, //Padding done manually above. Broken in QCA with ECB...
-                           QCA::Encode,
-                           key);
-
-        encrypted = cipher.process(Encryption::PKCS7Padding(data)).toByteArray();
-
-        //qDebug() << "AES128 encryption of " << data << qPrintable(QString("is [0x") + QCA::arrayToHex(encrypted) + QString("]\n"));
+    //Add padding
+    Encryption::PKCS7Padding(data);
+    //AES/ECB Encryption by hand
+    QByteArray encrypted(data.length(), '\0');
+    char *encodedBuffer = encrypted.data();
+    aes_context ctx;
+    aes_setkey_enc(&ctx, (unsigned char *)AES_KEY.toStdString().c_str(), 128);
+    for (int i = 0; i < data.length(); i += 16) {
+        aes_crypt_ecb(&ctx, AES_ENCRYPT, (unsigned char*)data.constData() + i, (unsigned char*)encodedBuffer + i);
     }
     return encrypted;
 }
 
 QByteArray Encryption::decryptSnap(QByteArray data){
-    QCA::Initializer init;
-    QByteArray decrypted;
-
-    if(!QCA::isSupported("aes128-ecb")){
-        qDebug() << "AES128-ECB not supported!\n";
-    } else {
-        QCA::SymmetricKey key(AES_KEY.toUtf8());
-
-        QCA::Cipher cipher(QString("aes128"),
-                           QCA::Cipher::ECB,
-                           QCA::Cipher::NoPadding, //Padding done manually above. Broken in QCA with ECB...
-                           QCA::Decode,
-                           key);
-
-        //Cipher decryption
-        QCA::SecureArray decryptedWithPKCS7Padding = cipher.process(data);
-        //Get the byte array
-        decrypted = decryptedWithPKCS7Padding.toByteArray();
-        //Remove PKCS7 Padding
-        Encryption::RemovePKCS7Padding(decrypted);
-
-        //qDebug() << "AES128 decryption of" << qPrintable(QString("[0x") + QCA::arrayToHex(data) + QString("] is")) << decrypted << "\n";
+    //AES/ECB Decryption by hand
+    QByteArray decrypted(data.length(), '\0');
+    char *encodedBuffer = decrypted.data();
+    aes_context ctx;
+    aes_setkey_dec(&ctx, (unsigned char *)AES_KEY.toUtf8().constData(), 128);
+    for (int i = 0; i < data.length(); i += 16) {
+        aes_crypt_ecb(&ctx, AES_DECRYPT, (unsigned char*)data.constData() + i, (unsigned char*)encodedBuffer + i);
     }
+    //Remove PKCS7 Padding
+    Encryption::RemovePKCS7Padding(decrypted);
     return decrypted;
 }
 
 QByteArray Encryption::decryptStory(QByteArray data, QString keyStr, QString ivStr){
-    QCA::Initializer init;
+    QByteArray key = keyStr.toUtf8();
+    QByteArray iv = ivStr.toUtf8();
+    //AES/CBC Encryption by hand..
     QByteArray decrypted;
-
-    if(!QCA::isSupported("aes128-cbc-pkcs7")){
-        qDebug() << "AES128-ECB not supported!\n";
-    } else {
-        QCA::SymmetricKey key(keyStr.toUtf8());
-        QCA::InitializationVector iv(ivStr.toUtf8());
-
-        QCA::Cipher cipher(QString("aes128"),
-                           QCA::Cipher::CBC,
-                           QCA::Cipher::PKCS7,
-                           QCA::Decode,
-                           key, iv);
-
-        //Cipher decryption
-        decrypted = cipher.process(data).toByteArray();
-
-        //qDebug() << "AES128-CBC decryption of" << qPrintable(QString("[0x") + QCA::arrayToHex(data) + QString("] is")) << decrypted << "\n";
+    aes_context ctx;
+    aes_setkey_dec(&ctx, (unsigned char *)key.constData(), 128);
+    char *inputBuffer = data.data();
+    char *ivBuffer = iv.data();
+    for (int i=0; i<data.length() / 16; i++) {
+        for (int j=0; j<16; j++) {
+            inputBuffer[i + j] ^= ivBuffer[j];
+        }
+        aes_crypt_ecb(&ctx, AES_DECRYPT, (unsigned char*)data.data() + (i * 16), (unsigned char*)ivBuffer);
+        decrypted += QByteArray::fromRawData(ivBuffer, 16);
     }
+    //Remove PKCS7 Padding
+    Encryption::RemovePKCS7Padding(decrypted);
     return decrypted;
 }
 
