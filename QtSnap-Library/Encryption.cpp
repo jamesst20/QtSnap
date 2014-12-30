@@ -63,7 +63,7 @@ QByteArray& Encryption::PKCS7Padding(QByteArray &bytes){
     if(loop == 0) loop = 16;
     //PKCS7Padding
     for(int i = 0; i < loop; i++){
-        bytes.append((byte)loop);
+        bytes.append((quint8)loop);
     }
     return bytes;
 }
