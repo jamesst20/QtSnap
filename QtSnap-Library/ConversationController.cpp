@@ -8,6 +8,7 @@ const QString ConversationController::SNAP_KEY = "snap";
 
 const QString ConversationController::UPLOAD_PATH = "ph/upload";
 const QString ConversationController::SEND_PATH = "loq/send";
+const QString ConversationController::BLOB_PATH = "ph/blob";
 
 const QString ConversationController::USERNAME_KEY = "username";
 const QString ConversationController::MEDIA_ID_KEY = "media_id";
@@ -19,6 +20,7 @@ const QString ConversationController::FEATURES_MAP_KEY = "features_map";
 const QString ConversationController::ZIPPED_KEY = "zipped";
 const QString ConversationController::RECIPIENTS_KEY = "recipients";
 const QString ConversationController::TIME_KEY = "time";
+const QString ConversationController::ID_KEY = "id";
 
 ConversationController::ConversationController()
 {
@@ -119,3 +121,24 @@ void ConversationController::onMediaSendFinished(int requestID, int httpCode, QB
         emit mediaSendFinished(requestID, false);
     }
 }
+
+void ConversationController::getSnap(const Snap &snap, int requestID){
+    QUrlQuery params;
+    qint64 timestamp = QDateTime::currentMSecsSinceEpoch();
+    params.addQueryItem(ID_KEY, snap.getID());
+    params.addQueryItem(USERNAME_KEY, this->snapchatInstance->getUsername());
+    params.addQueryItem(TIMESTAMP_KEY, QString::number(timestamp));
+    params.addQueryItem(REQ_TOKEN_KEY, TokenLib::getRequestToken(this->snapchatInstance->getAuthToken(), timestamp));
+    //Execute get snap request
+    this->snapchatInstance->getNetworkRequestMaker().executeRequest(requestID, BLOB_PATH, params, std::bind(&ConversationController::onSnapDownloadFinished, this, _1, _2, _3));
+}
+
+void ConversationController::onSnapDownloadFinished(int requestID, int httpCode, QByteArray data){
+    if(httpCode >= 200 && httpCode < 300){
+        emit snapDownloadFinished(requestID, true, Encryption::decryptSnap(data));
+    }else{
+        emit snapDownloadFinished(requestID, false, data);
+    }
+}
+
+

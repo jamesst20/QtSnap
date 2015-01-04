@@ -85,3 +85,7 @@ bool Snap::isVideo() const {
 bool Snap::isFriendRequest() const {
     return this->mediaType >= FRIEND_REQUEST;
 }
+
+bool Snap::isDownloadable() const {
+    return (!isViewed() && !isFriendRequest() && isIncoming());
+}

@@ -23,6 +23,7 @@ public:
     bool isZipped() const;
     bool isVideo() const;
     bool isFriendRequest() const;
+    bool isDownloadable() const;
 
 private:
     bool incoming;

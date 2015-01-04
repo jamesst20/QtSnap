@@ -37,14 +37,17 @@ public:
     const QList<Snap> &getSnaps() const;
 
     void sendSnap(QList<QString> recipients, float time, QFile *file, bool isVideo, int requestID = rand());
+    void getSnap(const Snap &snap, int requestID = rand());
 
 private slots:
     void onMediaUploadFinished(int requestID, int httpCode, QByteArray data);
     void onMediaSendFinished(int requestID, int httpCode, QByteArray data);
+    void onSnapDownloadFinished(int requestID, int httpCode, QByteArray data);
 
 signals:
     void mediaUploadFinished(int requestID, bool success);
     void mediaSendFinished(int requestID, bool success);
+    void snapDownloadFinished(int requestID, bool success, QByteArray data);
 
 private:
     void uploadMedia(const MediaSendInfo mediaSendInfo);
@@ -62,6 +65,7 @@ private:
 
     static const QString UPLOAD_PATH;
     static const QString SEND_PATH;
+    static const QString BLOB_PATH;
 
     static const QString USERNAME_KEY;
     static const QString MEDIA_ID_KEY;
@@ -73,6 +77,7 @@ private:
     static const QString ZIPPED_KEY;
     static const QString RECIPIENTS_KEY;
     static const QString TIME_KEY;
+    static const QString ID_KEY;
 
 };
 
