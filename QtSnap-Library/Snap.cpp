@@ -62,7 +62,7 @@ long Snap::getSentTime() const {
 }
 
 bool Snap::isViewed() const {
-    return this->state == SENT || this->state == SCREENSHOT;
+    return this->state == VIEWED || this->state == SCREENSHOT;
 }
 
 bool Snap::isScreenshotted() const {
