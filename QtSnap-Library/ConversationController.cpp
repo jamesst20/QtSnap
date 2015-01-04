@@ -112,6 +112,8 @@ void ConversationController::sendMedia(const MediaSendInfo mediaSendInfo){
     params.insert(FEATURES_MAP_KEY, "{}");
     //Execute send request.
     this->snapchatInstance->getNetworkRequestMaker().executeRequest(this->queuedMediaSendInfo.key(mediaSendInfo), SEND_PATH, params, std::bind(&ConversationController::onMediaSendFinished, this, _1, _2, _3));
+    //Remove MediaSendInfo from queue
+    this->queuedMediaSendInfo.remove(this->queuedMediaSendInfo.key(mediaSendInfo));
 }
 
 void ConversationController::onMediaSendFinished(int requestID, int httpCode, QByteArray) {
