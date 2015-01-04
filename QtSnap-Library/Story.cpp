@@ -50,7 +50,7 @@ Story::Story(QJsonObject fullStoryObj, bool isMyStory)
     this->author = storyObj[USERNAME_KEY].toString();
     this->matureContent = storyObj[MATURE_CONTENT_KEY].toBool();
     this->clientID = storyObj[CLIENT_ID_KEY].toString();
-    this->timestamp = storyObj[TIMESTAMP_KEY].toString().toLong();
+    this->timestamp = storyObj[TIMESTAMP_KEY].toString().toLongLong();
     this->media_id = storyObj[MEDIA_ID_KEY].toString();
     this->media_key = storyObj[MEDIA_KEY_KEY].toString();
     this->media_iv = storyObj[MEDIA_IV_KEY].toString();
@@ -59,7 +59,7 @@ Story::Story(QJsonObject fullStoryObj, bool isMyStory)
     this->time = storyObj[TIME_KEY].toString().toFloat();
     this->text = storyObj[CAPTION_TEXT_DISPLAY_KEY].toString();
     this->zipped = storyObj[ZIPPED_KEY].toBool();
-    this->timeLeft = storyObj[TIME_LEFT_KEY].toString().toLong();
+    this->timeLeft = storyObj[TIME_LEFT_KEY].toString().toLongLong();
     this->media_url = storyObj[MEDIA_URL_KEY].toString();
     this->thumbnail_url = storyObj[THUMBNAIL_URL_KEY].toString();
 
@@ -81,7 +81,7 @@ const QString Story::getClientID() const {
     return this->clientID;
 }
 
-long Story::getSentTime() const {
+qint64 Story::getSentTime() const {
     return this->timestamp;
 }
 
@@ -117,7 +117,7 @@ bool Story::isZipped() const {
     return this->zipped;
 }
 
-long Story::getTimeLeft() const {
+qint64 Story::getTimeLeft() const {
     return this->timeLeft;
 }
 

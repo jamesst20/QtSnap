@@ -15,8 +15,8 @@ public:
     const QString getID() const;
     const QString getSenderName() const;
     const QString getRecipientName() const;
-    long getLastInteractionTime() const;
-    long getSentTime() const;
+    qint64 getLastInteractionTime() const;
+    qint64 getSentTime() const;
     bool isViewed() const;
     bool isScreenshotted() const;
     float getDuration() const;
@@ -31,8 +31,8 @@ private:
     QString senderName;
     QString recipientName;
     int mediaType;
-    long timestamp;
-    long sentTimestamp;
+    qint64 timestamp;
+    qint64 sentTimestamp;
     int state;
     float timer;
     bool zipped;

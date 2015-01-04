@@ -18,7 +18,7 @@ public:
     const QString getAuthor() const;
     bool hasMatureContent() const;
     const QString getClientID() const;
-    long getSentTime() const;
+    qint64 getSentTime() const;
     const QString getMediaID() const;
     const QString getMediaKey() const;
     const QString getMediaIV() const;
@@ -27,7 +27,7 @@ public:
     float getDuration() const;
     const QString getCaptionText() const;
     bool isZipped() const;
-    long getTimeLeft() const;
+    qint64 getTimeLeft() const;
     const QString getMediaURL() const;
     const QString getThumbnailURL() const;
     //Only for other's story
@@ -46,7 +46,7 @@ private:
     QString author;
     bool matureContent;
     QString clientID;
-    long timestamp;
+    qint64 timestamp;
     QString media_id;
     QString media_key;
     QString media_iv;
@@ -55,7 +55,7 @@ private:
     float time;
     QString text;
     bool zipped;
-    long timeLeft;
+    qint64 timeLeft;
     QString media_url;
     QString thumbnail_url;
 

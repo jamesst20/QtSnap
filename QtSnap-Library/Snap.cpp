@@ -21,8 +21,8 @@ Snap::Snap(QJsonObject snapObj)
     this->id = snapObj[ID_KEY].toString();
     this->state = snapObj[STATE_KEY].toInt();
     this->mediaType = snapObj[MEDIA_TYPE_KEY].toInt();
-    this->timestamp = snapObj[TIMESTAMP_KEY].toString().toLong();
-    this->sentTimestamp = snapObj[SENT_TIMESTAMP_KEY].toString().toLong();
+    this->timestamp = snapObj[TIMESTAMP_KEY].toString().toLongLong();
+    this->sentTimestamp = snapObj[SENT_TIMESTAMP_KEY].toString().toLongLong();
 
     //Determine if we sent or received this snap
     this->incoming = this->id.endsWith("r", Qt::CaseInsensitive);
@@ -53,11 +53,11 @@ const QString Snap::getRecipientName() const {
     return this->recipientName;
 }
 
-long Snap::getLastInteractionTime() const {
+qint64 Snap::getLastInteractionTime() const {
     return this->timestamp;
 }
 
-long Snap::getSentTime() const {
+qint64 Snap::getSentTime() const {
     return this->sentTimestamp;
 }
 
