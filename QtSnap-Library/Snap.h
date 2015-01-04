@@ -22,6 +22,7 @@ public:
     float getDuration() const;
     bool isZipped() const;
     bool isVideo() const;
+    bool isFriendRequest() const;
 
 private:
     bool incoming;

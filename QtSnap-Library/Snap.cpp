@@ -78,5 +78,10 @@ bool Snap::isZipped() const{
 }
 
 bool Snap::isVideo() const {
-    return this->mediaType == 0;
+    return this->mediaType == VIDEO || this->mediaType == VIDEO_NOAUDIO
+            || this->mediaType == FRIEND_REQUEST_VIDEO || this->mediaType == FRIEND_REQUEST_VIDEO_NOAUDIO;
+}
+
+bool Snap::isFriendRequest() const {
+    return this->mediaType >= FRIEND_REQUEST;
 }
