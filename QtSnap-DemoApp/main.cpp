@@ -31,7 +31,9 @@ int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
 
-    Snapchat snapchat;    
+    ClearScreen();
+
+    Snapchat snapchat;
 
     cout << "Snapchat username : ";
     QString username = in.readLine();
@@ -68,9 +70,43 @@ int main(int argc, char *argv[])
     QString choice = in.readLine(1);
 
     if(choice == "1"){
-
+        //Connect signal that will be emitted once a snap is downloaded.
+        QObject::connect(&snapchat.getConversationController(), &ConversationController::snapDownloadFinished, [=](int id, bool success, QByteArray data){
+            if(success){
+                QFile file("snap-" + QString::number(id) + ".jpg");
+                file.open(QFile::WriteOnly);
+                file.write(data);
+                file.close();
+                qDebug() << "Snap saved as " << "snap-" + QString::number(id) + ".jpg";
+            }else{
+                cout << "Failed to download snap. Why?";
+            }
+        });
+        //Download all snaps
+        QList<Snap> snaps = snapchat.getConversationController().getSnaps();
+        foreach(Snap snap, snaps){
+            if(snap.isDownloadable()){
+                snapchat.getConversationController().getSnap(snap);
+            }
+        }
     }else if(choice == "2"){
+        QObject::connect(&snapchat.getStoryController(), &StoryController::storyDownloadFinished, [=](int id, bool success, QByteArray data){
+            if(success){
+                QFile file("story-" + QString::number(id) + ".jpg");
+                file.open(QFile::WriteOnly);
+                file.write(data);
+                file.close();
+                qDebug() << "Story saved as " << "story-" + QString::number(id) + ".jpg";
+            }else{
+                cout << "Failed to download story. Why?";
+            }
 
+        });
+        //Download all stories
+        QList<Story> stories = snapchat.getStoryController().getStories();
+        foreach(Story story, stories){
+            snapchat.getStoryController().getStory(story);
+        }
     }else if(choice == "3"){
 
     }else if(choice == "4"){
@@ -78,7 +114,6 @@ int main(int argc, char *argv[])
     }else{
         cout << endl << "Invalid choice.";
     }
-
     return a.exec();
 }
 
