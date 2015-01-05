@@ -31,24 +31,26 @@ QByteArray Encryption::decryptSnap(QByteArray data){
 }
 
 QByteArray Encryption::decryptStory(QByteArray data, QString keyStr, QString ivStr){
-    QByteArray key = keyStr.toUtf8();
-    QByteArray iv = ivStr.toUtf8();
-    //AES/CBC Encryption by hand..
-    QByteArray decrypted;
+    QByteArray result;
+    QByteArray key = QByteArray::fromBase64(keyStr.toUtf8());
+    QByteArray iv = QByteArray::fromBase64(ivStr.toUtf8());
+
+    result.resize(data.size());
+
     aes_context ctx;
-    aes_setkey_dec(&ctx, (unsigned char *)key.constData(), 128);
-    char *inputBuffer = data.data();
-    char *ivBuffer = iv.data();
-    for (int i=0; i<data.length() / 16; i++) {
-        for (int j=0; j<16; j++) {
-            inputBuffer[i + j] ^= ivBuffer[j];
-        }
-        aes_crypt_ecb(&ctx, AES_DECRYPT, (unsigned char*)data.data() + (i * 16), (unsigned char*)ivBuffer);
-        decrypted += QByteArray::fromRawData(ivBuffer, 16);
-    }
-    //Remove PKCS7 Padding
-    Encryption::RemovePKCS7Padding(decrypted);
-    return decrypted;
+    aes_init(&ctx);
+
+    aes_setkey_dec(&ctx, (const unsigned char*)key.data(), key.size()*8);
+
+    aes_crypt_cbc(&ctx, AES_DECRYPT,
+                            data.size(),
+                            (unsigned char*)iv.data(),
+                            (const unsigned char*)data.data(),
+                            (unsigned char*)result.data());
+
+    Encryption::RemovePKCS7Padding(result);
+
+    return result;
 }
 
 QByteArray& Encryption::PKCS7Padding(QByteArray &bytes){

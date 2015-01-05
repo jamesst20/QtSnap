@@ -21,6 +21,7 @@ const QString Snapchat::CHECKSUMS_DICT_KEY = "checksums_dict";
 Snapchat::Snapchat()
 {
     this->conversationController.initialize(this);
+    this->storyController.initialize(this);
 }
 
 void Snapchat::login(QString username, QString password){
