@@ -11,9 +11,9 @@
 class Encryption
 {
 public:
-    static QByteArray encryptSnapOrStory(QByteArray data);
-    static QByteArray decryptSnap(QByteArray data);
-    static QByteArray decryptStory(QByteArray data, QString keyStr, QString ivStr);
+    static QByteArray encryptSnapOrStory(QByteArray input);
+    static QByteArray decryptSnap(QByteArray input);
+    static QByteArray decryptStory(QByteArray input, QString keyStr, QString ivStr);
 
     static QString randomMediaID(QString username);
 
