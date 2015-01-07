@@ -125,12 +125,12 @@ void ConversationController::onMediaSendFinished(int requestID, int httpCode, QB
 }
 
 void ConversationController::getSnap(const Snap &snap, int requestID){
-    QUrlQuery params;
+    QHash<QString, QString> params;
     qint64 timestamp = QDateTime::currentMSecsSinceEpoch();
-    params.addQueryItem(ID_KEY, snap.getID());
-    params.addQueryItem(USERNAME_KEY, this->snapchatInstance->getUsername());
-    params.addQueryItem(TIMESTAMP_KEY, QString::number(timestamp));
-    params.addQueryItem(REQ_TOKEN_KEY, TokenLib::getRequestToken(this->snapchatInstance->getAuthToken(), timestamp));
+    params.insert(ID_KEY, snap.getID());
+    params.insert(USERNAME_KEY, this->snapchatInstance->getUsername());
+    params.insert(TIMESTAMP_KEY, QString::number(timestamp));
+    params.insert(REQ_TOKEN_KEY, TokenLib::getRequestToken(this->snapchatInstance->getAuthToken(), timestamp));
     //Execute get snap request
     this->snapchatInstance->getNetworkRequestMaker().executeRequest(requestID, BLOB_PATH, params, std::bind(&ConversationController::onSnapDownloadFinished, this, _1, _2, _3));
 }
