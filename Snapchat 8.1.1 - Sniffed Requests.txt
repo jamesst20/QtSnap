@@ -1,0 +1,273 @@
+================== LOGIN =========================
+POST https://feelinsonice-hrd.appspot.com/loq/login HTTP/1.1
+User-Agent: Snapchat/8.1.1 Beta (A0001; Android 21; gzip)
+Accept-Language: fr;q=1, en;q=0.9
+Accept-Locale: fr_CA
+Content-Length: 879
+Content-Type: application/x-www-form-urlencoded
+Host: feelinsonice-hrd.appspot.com
+Connection: Keep-Alive
+
+username=jamesst20&
+timestamp=1419103857384&
+req_token=93051a56a2d127a86e4e6ee6faac2c74b3e04d8e19b81a81d9b43a14dbc5168b&
+password=monMotDePasse&
+features_map={"all_updates_friends_response":true}
+
+=============== loq/all_updates ==============================
+
+POST https://feelinsonice-hrd.appspot.com/loq/all_updates HTTP/1.1
+User-Agent: Snapchat/8.1.1 Beta (A0001; Android 21; gzip)
+Accept-Language: fr;q=1, en;q=0.9
+Accept-Locale: fr_CA
+Content-Length: 194
+Content-Type: application/x-www-form-urlencoded
+Host: feelinsonice-hrd.appspot.com
+Connection: Keep-Alive
+
+username=jamesst20&
+timestamp=1419113260738&
+req_token=a595c6136b5e8f3f8ea241f5cf0f37edfaddc68ed88c5baec28110d2e01851d0&
+features_map={"all_updates_friends_response":true}&
+checksums_dict={}
+
+=================== /ph/device ====================================
+POST https://feelinsonice-hrd.appspot.com/ph/device HTTP/1.1
+User-Agent: Snapchat/8.1.1 Beta (A0001; Android 21; gzip)
+Accept-Language: fr;q=1, en;q=0.9
+Accept-Locale: fr_CA
+Content-Length: 326
+Content-Type: application/x-www-form-urlencoded
+Host: feelinsonice-hrd.appspot.com
+Connection: Keep-Alive
+
+device_token=APA91bGbu03oOnFTRDrLMLXl56jf3-COQrugE6GowTvaOQI-sVVIGdUOXTqnvqPPeUAOMPspjBC3uyA5HP7iN3rlf3s5HuIpGoEG33iwP04uLjYva-o5UNDG4d-lv0cVc11Oyv-oaJT_B3-x7r4n5p__2CUjLGd4oQ&
+username=jamesst20&
+type=android&
+timestamp=1419113512316&
+req_token=a59dcc13ac1efd0f8efb34fccb00375d9cd2c681d898abad32811ed2e6185cf0&
+features_map={}
+========================= shared/description ========================
+
+POST https://feelinsonice-hrd.appspot.com/shared/description HTTP/1.1
+User-Agent: Snapchat/8.1.1 Beta (A0001; Android 21; gzip)
+Accept-Language: fr;q=1, en;q=0.9
+Accept-Locale: fr_CA
+Content-Length: 159
+Content-Type: application/x-www-form-urlencoded
+Host: feelinsonice-hrd.appspot.com
+Connection: Keep-Alive
+
+shared_id=pipemasters&
+username=jamesst20&
+timestamp=1419113512767&
+req_token=a599461ce08e2bcf8ebb44fac509a47d47dfc687d8d0dba442813ad2e9185c90&
+features_map={}
+
+=============================== ph/logout ================================
+
+POST https://feelinsonice-hrd.appspot.com/ph/logout HTTP/1.1
+Accept-Language: fr;q=1, en;q=0.9
+Accept-Locale: fr_CA
+User-Agent: Snapchat/8.1.1 Beta (A0001; Android 21; gzip)
+Content-Length: 8150
+Content-Type: application/x-www-form-urlencoded
+Host: feelinsonice-hrd.appspot.com
+Connection: Keep-Alive
+
+added_friends_timestamp=1418604207411&events=[{"eventName":"SYNC_ALL","params":{"NEWLY_RECEIVED_CHATS_COUNT":"0","NEWLY_RECEIVED_SNAPS_COUNT":"-1","UNVIEWED_SNAPS_COUNT":"0","FROM_NOTIFICATION":"false","UNVIEWED_CHATS_COUNT":"0"},"ts":1.419112928451E9},{"eventName":"PULL_TO_REFRESH","params":{"response_compare_results_dict":"{\"updates_checksum\":\"not_equal\",\"friends_checksum\":\"not_equal\",\"stories_checksum\":\"not_equal\",\"conversations_checksum\":\"not_equal\"}","server_latency":"206","response_checksum":"{\"updates_checksum\":\"458df35b7008d31a744fd79a4bd59628\",\"friends_checksum\":\"08f04f1fc6689dd4a77eabbc210a1142\",\"stories_checksum\":\"ea29892719b79fc8279f05d397c06558\",\"conversations_checksum\":\"3446e33f0eefc271a7f592a7e03e82ba\"}","reachability":"wifi","context":"Feed","timeBucket":"2.460-2.718 s","return_size_bytes":"54222","is_full_response":"true","response_compare_result":"not_equal","success":"true"},"ts":1.419112928456E9},{"eventName":"ENDPOINT_REQUEST","params":{"response_compare_results_dict":"{\"updates_checksum\":\"not_equal\",\"friends_checksum\":\"not_equal\",\"stories_checksum\":\"not_equal\",\"conversations_checksum\":\"not_equal\"}","server_latency":"206","response_checksum":"{\"updates_checksum\":\"458df35b7008d31a744fd79a4bd59628\",\"friends_checksum\":\"08f04f1fc6689dd4a77eabbc210a1142\",\"stories_checksum\":\"ea29892719b79fc8279f05d397c06558\",\"conversations_checksum\":\"3446e33f0eefc271a7f592a7e03e82ba\"}","Hit_Cache":"false","return_size_bytes":"54222","status_code":"200","total_latency":"2450","reachability":"wifi","endpoint":"/loq/all_updates","request_size_bytes":"480","study_settings":"[{\"experimentId\":\"1\",\"studyId\":\"USE_VIDEO_STABILIZATION\"},{\"experimentId\":\"1\",\"studyId\":\"DELTA_RESPONSE\"}]","response_compare_result":"not_equal"},"ts":1.419112928461E9},{"eventName":"ENDPOINT_REQUEST","params":{"Hit_Cache":"false","reachability":"wifi","endpoint":"/shared/description","return_size_bytes":"328","request_size_bytes":"442","study_settings":"[{\"experimentId\":\"1\",\"studyId\":\"USE_VIDEO_STABILIZATION\"},{\"experimentId\":\"1\",\"studyId\":\"DELTA_RESPONSE\"}]","status_code":"200","total_latency":"526"},"ts":1.419112928925E9},{"eventName":"MEDIA_VIEW_INTERVAL","params":{"last_action":"end_view_media","context":"feed","current_action":"exit_page","timeBucket":"1.105-1.221 s"},"ts":1.41911292943E9},{"eventName":"SESSION_WITH_FILTERS_ENABLED","ts":1.419113244352E9},{"eventName":"ON_RESUME","params":{"SDK_INT":"21","CPU_ABI2":"armeabi","CPU_ABI":"armeabi-v7a","MODEL":"A0001","SDK_RELEASE":"5.0.1","FILTERS_ENABLED":"true","DEVICE":"A0001"},"ts":1.419113244354E9},{"eventName":"APP_STARTUP_TIMED","metrics":{"timers":{"time":["1372"]}},"params":{"study_settings":"[{\"experimentId\":\"1\",\"studyId\":\"USE_VIDEO_STABILIZATION\"},{\"experimentId\":\"1\",\"studyId\":\"DELTA_RESPONSE\"}]","timeBucket":"1.350-1.492 s","from_background":"false"},"ts":1.419113244394E9},{"eventName":"CAMERA_DELAY","metrics":{"timers":{"time":["1390"]}},"params":{"timeBucket":"1.350-1.492 s","context":"killed_state","camera_running":"false"},"ts":1.419113244789E9},{"eventName":"PAGE_CHANGED","params":{"Previous page":"Camera","New page":"Feed"},"ts":1.419113245439E9},{"eventName":"EXIT_CAMERA_VIEW","metrics":{"timers":{"time":["1551"]}},"params":{"timeBucket":"1.492-1.649 s","context":"feed"},"ts":1.419113245439E9},{"eventName":"MEDIA_VIEW_INTERVAL","metrics":{"timers":{"time":["2373"]}},"params":{"last_action":"move_to_page","timeBucket":"2.226-2.460 s","current_action":"exit_page","context":"feed"},"ts":1.419113246272E9},{"eventName":"PAGE_SETTINGS","ts":1.419113246331E9},{"eventName":"SYNC_ALL","params":{"NEWLY_RECEIVED_CHATS_COUNT":"0","UNVIEWED_SNAPS_COUNT":"0","NEWLY_RECEIVED_SNAPS_COUNT":"0","FROM_NOTIFICATION":"false","UNVIEWED_CHATS_COUNT":"0"},"ts":1.419113247082E9},{"eventName":"ENDPOINT_REQUEST","params":{"server_latency":"76","response_compare_results_dict":"{\"updates_checksum\":\"equal\",\"friends_checksum\":\"equal\",\"stories_checksum\":\"equal\",\"conversations_checksum\":\"not_equal\"}","response_checksum":"{\"updates_checksum\":\"458df35b7008d31a744fd79a4bd59628\",\"friends_checksum\":\"08f04f1fc6689dd4a77eabbc210a1142\",\"stories_checksum\":\"ea29892719b79fc8279f05d397c06558\",\"conversations_checksum\":\"14b18a47525970c610df7d7f15cacdc1\"}","Hit_Cache":"false","return_size_bytes":"34070","status_code":"200","total_latency":"3294","reachability":"wifi","endpoint":"/loq/all_updates","study_settings":"[{\"experimentId\":\"1\",\"studyId\":\"USE_VIDEO_STABILIZATION\"},{\"experimentId\":\"1\",\"studyId\":\"DELTA_RESPONSE\"}]","request_size_bytes":"747","response_compare_result":"not_equal"},"ts":1.419113247091E9},{"eventName":"ENDPOINT_REQUEST","params":{"reachability":"wifi","Hit_Cache":"false","endpoint":"/shared/description","return_size_bytes":"328","study_settings":"[{\"experimentId\":\"1\",\"studyId\":\"USE_VIDEO_STABILIZATION\"},{\"experimentId\":\"1\",\"studyId\":\"DELTA_RESPONSE\"}]","request_size_bytes":"442","status_code":"200","total_latency":"322"},"ts":1.419113247369E9},{"eventName":"LOGOUT_DIALOG","params":{"result":"yes"},"ts":1.419113248521E9},{"eventName":"LOGOUT","params":{"REASON":"USER_INITIATED"},"ts":1.419113248522E9}]&json={}&req_token=3b2122b85d63d5c6e5ec83de2f681e2dab12dca052d6ae1e1c508015f38ad00e&timestamp=1419113248527&username=jamesst20
+
+
+================================ GET ph/blob ================================
+GET https://feelinsonice-hrd.appspot.com/ph/blob?id=301536419112918920r&username=jamesst20&timestamp=1419112924089&req_token=3b233db20a030e16e55430d92b69342d0d16dca25283ee1d1c506915fd8adc5e HTTP/1.1
+Accept-Language: fr;q=1, en;q=0.9
+Accept-Locale: fr_CA
+User-Agent: Snapchat/8.1.1 Beta (A0001; Android 21; gzip)
+Host: feelinsonice-hrd.appspot.com
+Connection: Keep-Alive
+
+========================== GET bq/story_blob ==================================================
+GET https://feelinsonice-hrd.appspot.com/bq/story_blob?story_id=5859241744203776 HTTP/1.1
+Accept-Language: fr;q=1, en;q=0.9
+Accept-Locale: fr_CA
+User-Agent: Snapchat/8.1.1 Beta (A0001; Android 21; gzip)
+Host: feelinsonice-hrd.appspot.com
+Connection: Keep-Alive
+
+=========================== GET bq/story_thumbnail ================================================
+GET https://feelinsonice-hrd.appspot.com/bq/story_thumbnail?story_id=4732894848286720 HTTP/1.1
+Accept-Language: fr;q=1, en;q=0.9
+Accept-Locale: fr_CA
+User-Agent: Snapchat/8.1.1 Beta (A0001; Android 21; gzip)
+Host: feelinsonice-hrd.appspot.com
+Connection: Keep-Alive
+
+=============================== loq/local_story   (Used for weather??) ==============================
+POST https://feelinsonice-hrd.appspot.com/loq/local_story HTTP/1.1
+Accept-Language: fr;q=1, en;q=0.9
+Accept-Locale: fr_CA
+User-Agent: Snapchat/8.1.1 Beta (A0001; Android 21; gzip)
+Content-Length: 149
+Content-Type: application/x-www-form-urlencoded
+Host: feelinsonice-hrd.appspot.com
+Connection: Keep-Alive
+
+lat=46.7379924&
+long=-71.3840844&
+req_token=3b2ca4bf39a3f376e50341d32d624e8d4910dcae52b44e166c508515f88ad15e&
+timestamp=1419112925278&
+username=jamesst20
+
+====================================== GET   loq/conversation =================================================
+GET https://feelinsonice-hrd.appspot.com/loq/conversation?conversation_id=jamesst20~jamesst20&username=jamesst20&timestamp=1419112918851&req_token=3b2a37beef53f206e57ff1d72f61ecbd061ddca952ef0e100c50cb15f08adb3e&features_map={} HTTP/1.1
+User-Agent: Snapchat/8.1.1 Beta (A0001; Android 21; gzip)
+Accept-Language: fr;q=1, en;q=0.9
+Accept-Locale: fr_CA
+Host: feelinsonice-hrd.appspot.com
+Connection: Keep-Alive
+
+========================================== ph/upload ===================================================
+
+POST https://feelinsonice-hrd.appspot.com/ph/upload HTTP/1.1
+User-Agent: Snapchat/8.1.1 Beta (A0001; Android 21; gzip)
+Accept-Language: fr;q=1, en;q=0.9
+Accept-Locale: fr_CA
+Content-Length: 85043
+Content-Type: multipart/form-data; boundary=OIXsLUIsU84XnVYOSxUvdO0J-lp2kKIl_h
+Host: feelinsonice-hrd.appspot.com
+Connection: Keep-Alive
+
+Content-Disposition: form-data; name="media_id"
+JAMESST20~FEECF811-2E87-4E35-AE02-5A11021BD4ED
+
+Content-Disposition: form-data; name="username"
+jamesst20
+
+Content-Disposition: form-data; name="data"; filename="data"
+Content-Type: application/octet-stream
+####THE DATA#########
+
+Content-Disposition: form-data; name="type"
+0  #0 because it was a picture
+
+Content-Disposition: form-data; name="timestamp"
+1419112913302
+
+Content-Disposition: form-data; name="req_token"
+3b2c52b9d1535136e579f0df25668a3df916dcad52900e1c1c50d215f58adffe
+
+Content-Disposition: form-data; name="features_map"
+{}
+
+===================================== loq/send ================================================
+
+POST https://feelinsonice-hrd.appspot.com/loq/send HTTP/1.1
+User-Agent: Snapchat/8.1.1 Beta (A0001; Android 21; gzip)
+Accept-Language: fr;q=1, en;q=0.9
+Accept-Locale: fr_CA
+Content-Length: 247
+Content-Type: application/x-www-form-urlencoded
+Host: feelinsonice-hrd.appspot.com
+Connection: Keep-Alive
+
+media_id=JAMESST20~FEECF811-2E87-4E35-AE02-5A11021BD4ED&
+zipped=0&
+recipients=["jamesst20"]&
+username=jamesst20&
+time=10.0&
+timestamp=1419112916477&
+req_token=3b2703bc0de30956e520f1d22a6a6cbdd119dca4528d5e14cc50df15f88ade8e&
+features_map={}
+
+==================================== bq/update_stories =====================================
+
+POST https://feelinsonice-hrd.appspot.com/bq/update_stories HTTP/1.1
+User-Agent: Snapchat/8.1.1 Beta (A0001; Android 21; gzip)
+Accept-Language: fr;q=1, en;q=0.9
+Accept-Locale: fr_CA
+Content-Length: 273
+Content-Type: application/x-www-form-urlencoded
+Host: feelinsonice-hrd.appspot.com
+Connection: Keep-Alive
+
+username=jamesst20&
+timestamp=1420601135037&
+req_token=326d3b9bf9ca1ad793bea150a2faf92647ccded6d7984c255861f17136e4a7c6&
+friend_stories=[{"id":"mini-michelt~1420564525798","screenshot_count":0,"timestamp":1420601135034}]&
+features_map={}
+
+============================== bq/delete_story =============================================
+POST https://feelinsonice-hrd.appspot.com/bq/delete_story HTTP/1.1
+User-Agent: Snapchat/8.1.1 Beta (A0001; Android 21; gzip)
+Accept-Language: fr;q=1, en;q=0.9
+Accept-Locale: fr_CA
+Content-Length: 152
+Content-Type: application/x-www-form-urlencoded
+Host: feelinsonice-hrd.appspot.com
+Connection: Keep-Alive
+
+username=jamesst20&
+timestamp=1420601555468&
+req_token=ec6d7586c5bbdb2c753c2703f08480adf7770f06dc763aeb9fb942634427647b&
+story_id=jamesst20~1420600934859
+
+Retourne un HTTP/1.1 204 No Content selon Fiddler????
+
+================================= bq/retry_post_story ================
+
+POST https://feelinsonice-hrd.appspot.com/bq/retry_post_story HTTP/1.1
+User-Agent: Snapchat/8.1.1 Beta (A0001; Android 21; gzip)
+Accept-Language: fr;q=1, en;q=0.9
+Accept-Locale: fr_CA
+Content-Length: 90111
+Content-Type: multipart/form-data; boundary=fQNmjJ8emkjJKj7Eb8Nmn6i0py-zTFXbn3Sg
+Host: feelinsonice-hrd.appspot.com
+Connection: Keep-Alive
+
+Content-Disposition: form-data; name="client_id"
+JAMESST20~8072D4CC-80B5-421A-8CBA-B98F21629C41
+
+Content-Disposition: form-data; name="group_ids"
+[]
+
+Content-Disposition: form-data; name="media_id"
+JAMESST20~8072D4CC-80B5-421A-8CBA-B98F21629C41
+
+Content-Disposition: form-data; name="zipped"
+0
+
+Content-Disposition: form-data; name="my_story"
+true
+
+Content-Disposition: form-data; name="username"
+jamesst20
+
+Content-Disposition: form-data; name="caption_text_display"
+Test2
+
+Content-Disposition: form-data; name="data"; filename="data"
+Content-Type: application/octet-stream
+#THE DATA
+
+Content-Disposition: form-data; name="time"
+3.0
+
+Content-Disposition: form-data; name="type"
+0
+
+Content-Disposition: form-data; name="timestamp"
+1420602329478 //Length = 13
+
+Content-Disposition: form-data; name="req_token"
+ec6e9a82f9bbbfac75df0400f08d0ced45700f0adc668aee5fb9de6343276a6b
+
+
+##OPTIONAL BUT IS IN REAL SNAPCHAT APP###
+Content-Disposition: form-data; name="thumbnail_data"; filename="thumbnail_data"
+Content-Type: application/octet-stream
+#DATA PNG
+
+
+##OPTIONAL BUT IS IN REAL SNAPCHAT APP###
+Content-Disposition: form-data; name="story_timestamp"
+15293049 //Length = 8
